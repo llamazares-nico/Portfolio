@@ -35,7 +35,7 @@ const HeroSection: React.FC = () => {
         <div className='flex flex-col gap-2'>
           <div className='flex flex-row items-center gap-4 text-[15px]'>
             <div>
-              <p>{t('home.university')} (*)</p>
+              <p>{t('home.university')}</p>
               <p>
                 {' '}
                 <a
@@ -53,9 +53,6 @@ const HeroSection: React.FC = () => {
                 <GraduationCap color='#0d9' strokeWidth={1} size={28} />
               </div>
             )}
-          </div>
-          <div className='text-[13px] text-[#777]'>
-            {t('home.university.remaining')} (*)
           </div>
         </div>
         <ButtonCut

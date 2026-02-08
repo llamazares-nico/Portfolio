@@ -12,7 +12,7 @@ type LanguageContextType = {
 
 // Crear el contexto
 const LanguageContext = createContext<LanguageContextType | undefined>(
-  undefined
+  undefined,
 )
 
 // Traducciones
@@ -27,7 +27,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Home section
     'home.role': 'Software Developer',
-    'home.university': 'Future University Programmer Analyst',
+    'home.university': 'University Programmer Analyst',
     'home.university.from': 'from the National University of La Plata',
     'home.university.remaining':
       '2 remaining subjects to complete - 92% completed',
@@ -330,7 +330,7 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Home section
     'home.role': 'Desarrollador de Software',
-    'home.university': 'Futuro Analista Programador Universitario',
+    'home.university': 'Analista Programador Universitario',
     'home.university.from': 'de la Universidad Nacional de La Plata',
     'home.university.remaining': '2 materias restantes - 92% completado',
     'home.resume': 'Currículum',

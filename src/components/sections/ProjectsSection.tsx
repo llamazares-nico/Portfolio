@@ -6,7 +6,7 @@ import ProjectCard from './ProjectCard'
 import {useWindowSize} from 'react-use'
 import Modal from '../common/Modal'
 import {GalleryImage, projectsData} from '../../data/projects'
-import {ChevronLeft, ChevronRight} from 'lucide-react'
+import {ArrowRight, ChevronLeft, ChevronRight} from 'lucide-react'
 
 interface Project {
   id: number
@@ -26,6 +26,7 @@ interface Project {
   }>
   imgStyle?: React.CSSProperties
   gallery?: GalleryImage[]
+  cover?: string
 }
 
 const preloadImage = (src: string) => {
@@ -57,6 +58,8 @@ const ProjectsSection: React.FC = () => {
     longDescription: p.longDescriptionKey
       ? t(p.longDescriptionKey)
       : t(p.descriptionKey),
+    // Primera captura (no video) de la galería: imagen principal de la tarjeta
+    cover: p.cover ?? p.gallery?.find((img) => !img.src.endsWith('.mp4'))?.src,
     links: p.links?.map((link) => ({
       ...link,
       icon: link.icon || <></>,
@@ -415,20 +418,115 @@ const ProjectsSection: React.FC = () => {
       </Modal>
     ) : null
 
+  const cardVariants = {
+    hidden: {opacity: 0, y: 60},
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {duration: 0.7, ease: 'easeOut'},
+    },
+  } as const
+
+  const featured = projects.slice(0, 4)
+  const rest = projects.slice(4)
+
+  const renderCard = (project: Project) => (
+    <ProjectCard
+      number={`#${project.id.toString().padStart(2, '0')}`}
+      category={project.category}
+      icon={project.icon}
+      image={project.image}
+      imageAlt={project.imageAlt}
+      cover={project.cover}
+      title={project.title}
+      description={project.description}
+      links={project.links}
+      imgStyle={project.imgStyle}
+    />
+  )
+
+  // Resto de los proyectos, siempre visible debajo de los destacados
+  const moreProjects = (
+    <motion.section
+      aria-labelledby='more-projects-title'
+      className='mt-16 mx-6 lg:mx-2'
+      initial={{opacity: 0, y: 30}}
+      whileInView={{opacity: 1, y: 0}}
+      viewport={{once: true, amount: 0.15}}
+      transition={{duration: 0.6, ease: 'easeOut'}}
+    >
+      <div className='flex flex-row items-baseline justify-between gap-4 mb-5'>
+        <h2
+          id='more-projects-title'
+          className='oswald-regular uppercase text-[28px] leading-none'
+        >
+          {t('projects.allOfMyProjects')}
+        </h2>
+        <span className='oswald-regular text-sm text-[#888] tracking-wide'>
+          {rest.length} {t('projects.moreCount')}
+        </span>
+      </div>
+      <ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3'>
+        {rest.map((project) => (
+          <li key={project.id}>
+            <button
+              type='button'
+              onClick={() => setSelectedProject(project.id)}
+              className='group w-full p-[2px] bg-[#070707] hover:bg-[#0fa]/75 focus-visible:bg-[#0fa] outline-none transition-colors cursor-pointer text-start'
+              style={{
+                clipPath:
+                  'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))',
+              }}
+            >
+              <span
+                className='flex flex-row items-center gap-3 bg-[#121212] pe-3'
+                style={{
+                  clipPath:
+                    'polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px))',
+                }}
+              >
+                <span className='w-14 h-14 shrink-0 overflow-hidden bg-[#0a0a0a] border-r border-[#070707]'>
+                  <img
+                    src={project.image}
+                    alt=''
+                    loading='lazy'
+                    style={project.imgStyle || {}}
+                    className='w-14 h-14 object-cover'
+                  />
+                </span>
+                <span className='flex flex-col min-w-0 grow'>
+                  <span className='oswald-regular uppercase text-[16px] truncate'>
+                    {project.title}
+                  </span>
+                  <span className='oswald-regular text-[11px] text-[#0fa] truncate'>
+                    {project.category}
+                  </span>
+                </span>
+                <ArrowRight
+                  size={16}
+                  className='shrink-0 text-[#666] group-hover:text-white group-hover:translate-x-0.5 transition-all'
+                />
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </motion.section>
+  )
+
   // Renderizar para móviles
   if (isMobile) {
     return (
-      <>
+      <section id='projects' className='pt-25 pb-15'>
         <motion.div
-          id='projects'
-          className='min-h-[85vh] flex flex-col gap-5 pt-25 pb-15'
+          className='flex flex-col gap-6'
           variants={stagger}
           initial='hidden'
           whileInView='visible'
-          viewport={{once: true, amount: 0.3}}
+          viewport={{once: true, amount: 0.1}}
         >
           <motion.div
-            className='text-end flex items-start pt-3 pe-10 justify-end text-[#fff] font-bold oswald-regular pb-5'
+            className='text-end flex items-start pt-3 pe-10 justify-end text-[#fff] font-bold oswald-regular pb-2'
             variants={{
               hidden: {opacity: 0, x: 75},
               visible: {
@@ -441,76 +539,43 @@ const ProjectsSection: React.FC = () => {
             <h1>{t('projects.title')}</h1>
           </motion.div>
 
-          {/* Mostrar solo los primeros 4 proyectos en la vista principal */}
-          {projects.slice(0, 4).map((project, index) => (
+          {featured.map((project, index) => (
             <motion.div
               key={project.id}
               className='relative'
-              variants={
-                index === 0
-                  ? fadeInUp
-                  : {
-                      hidden: {opacity: 0, y: 60},
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: {duration: 0.7, ease: 'easeOut'},
-                      },
-                    }
-              }
+              variants={index === 0 ? fadeInUp : cardVariants}
               onClick={() => setSelectedProject(project.id)}
             >
-              <ProjectCard
-                number={`#${project.id.toString().padStart(2, '0')}`}
-                category={project.category}
-                icon={project.icon}
-                image={project.image}
-                imageAlt={project.imageAlt}
-                title={project.title}
-                description={project.description}
-                links={project.links}
-                imgStyle={project.imgStyle}
-              />
+              {renderCard(project)}
             </motion.div>
           ))}
         </motion.div>
+        {moreProjects}
         {modal}
-      </>
+      </section>
     )
   }
 
-  // Renderizar para escritorio
+  // Escritorio: tarjetas escalonadas en la grilla
+  const desktopAreas = [
+    '1 / 1 / 10 / 2',
+    '2 / 2 / 10 / 3',
+    '3 / 3 / 10 / 4',
+    '3 / 4 / 10 / 5',
+  ]
+
   return (
-    <>
+    <section id='projects' className='pt-25 pb-15'>
       <motion.div
-        id='projects'
-        className='min-h-[85vh] grid grid-cols-4 grid-rows-9 gap-x-5 pt-25 pb-15 px-2 -me-5'
+        className='min-h-[640px] grid grid-cols-4 grid-rows-9 gap-x-5 px-2 -me-5'
         variants={stagger}
         initial='hidden'
         whileInView='visible'
         viewport={{once: true, amount: 0.3}}
       >
         <motion.div
-          className='relative cursor-pointer'
-          style={{gridArea: '1 / 1 / 10 / 2'}}
-          onClick={() => setSelectedProject(1)}
-          variants={fadeInUp}
-        >
-          <ProjectCard
-            number={'#01'}
-            category={projects[0]?.category || ''}
-            icon={projects[0]?.icon || <></>}
-            image={projects[0]?.image || ''}
-            imageAlt={projects[0]?.imageAlt || ''}
-            title={projects[0]?.title || ''}
-            description={projects[0]?.description || ''}
-            links={projects[0]?.links || []}
-            imgStyle={projects[0]?.imgStyle}
-          />
-        </motion.div>
-        <motion.div
           style={{gridArea: '1 / 3 / 3 / 6'}}
-          className='text-end flex items-start pt-3 pe-5 justify-end w-full h-full text-[#fff] font-bold oswald-regular select-none cursor-pointer origin-right'
+          className='text-end flex items-start pt-3 pe-5 justify-end w-full h-full text-[#fff] font-bold oswald-regular select-none'
           variants={{
             hidden: {opacity: 0, x: 75},
             visible: {
@@ -519,95 +584,24 @@ const ProjectsSection: React.FC = () => {
               transition: {duration: 0.5, ease: 'easeOut'},
             },
           }}
-          whileHover={{
-            scale: 1.05,
-            transition: {duration: 0.2, ease: 'easeOut'},
-          }}
-          onClick={() => {
-            setSelectedProject(1)
-          }}
         >
           <h1>{t('projects.title')}</h1>
         </motion.div>
-        <motion.div
-          className='relative cursor-pointer'
-          style={{gridArea: '2 / 2 / 10 / 3'}}
-          onClick={() => setSelectedProject(2)}
-          variants={{
-            hidden: {opacity: 0, y: 60},
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: {duration: 0.7, ease: 'easeOut'},
-            },
-          }}
-        >
-          <ProjectCard
-            number={'#02'}
-            category={projects[1]?.category || ''}
-            icon={projects[1]?.icon || <></>}
-            image={projects[1]?.image || ''}
-            imageAlt={projects[1]?.imageAlt || ''}
-            title={projects[1]?.title || ''}
-            description={projects[1]?.description || ''}
-            links={projects[1]?.links || []}
-            imgStyle={projects[1]?.imgStyle}
-          />
-        </motion.div>
-        <motion.div
-          className='relative cursor-pointer'
-          style={{gridArea: '3 / 3 / 10 / 4'}}
-          onClick={() => setSelectedProject(3)}
-          variants={{
-            hidden: {opacity: 0, y: 60},
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: {duration: 0.7, ease: 'easeOut'},
-            },
-          }}
-        >
-          <ProjectCard
-            number={'#03'}
-            category={projects[2]?.category || ''}
-            icon={projects[2]?.icon || <></>}
-            image={projects[2]?.image || ''}
-            imageAlt={projects[2]?.imageAlt || ''}
-            title={projects[2]?.title || ''}
-            description={projects[2]?.description || ''}
-            links={[]}
-            imgStyle={projects[2]?.imgStyle}
-          />
-        </motion.div>
-        <motion.div
-          className='relative cursor-pointer'
-          style={{gridArea: '3 / 4 / 10 / 5'}}
-          onClick={() => setSelectedProject(4)}
-          variants={{
-            hidden: {opacity: 0, y: 60},
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: {duration: 0.7, ease: 'easeOut'},
-            },
-          }}
-        >
-          <ProjectCard
-            number={'#04'}
-            category={projects[3]?.category || ''}
-            icon={projects[3]?.icon || <></>}
-            image={projects[3]?.image || ''}
-            imageAlt={projects[3]?.imageAlt || ''}
-            title={projects[3]?.title || ''}
-            description={projects[3]?.description || ''}
-            links={[]}
-            imgStyle={projects[3]?.imgStyle}
-          />
-        </motion.div>
+        {featured.map((project, index) => (
+          <motion.div
+            key={project.id}
+            className='relative'
+            style={{gridArea: desktopAreas[index]}}
+            onClick={() => setSelectedProject(project.id)}
+            variants={index === 0 ? fadeInUp : cardVariants}
+          >
+            {renderCard(project)}
+          </motion.div>
+        ))}
       </motion.div>
-
+      {moreProjects}
       {modal}
-    </>
+    </section>
   )
 }
 

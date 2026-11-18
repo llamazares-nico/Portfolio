@@ -52,6 +52,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     'projects.description': 'Description',
     'projects.allOfMyProjects': 'More projects',
+    'projects.moreCount': 'projects',
+    'projects.viewProject': 'View project',
     'projects.technologies': 'Technologies',
     'projects.links': 'Links',
 
@@ -354,6 +356,8 @@ const translations: Record<Language, Record<string, string>> = {
 
     'projects.description': 'Descripción',
     'projects.allOfMyProjects': 'Más proyectos',
+    'projects.moreCount': 'proyectos',
+    'projects.viewProject': 'Ver proyecto',
     'projects.technologies': 'Tecnologías',
     'projects.links': 'Enlaces',
 

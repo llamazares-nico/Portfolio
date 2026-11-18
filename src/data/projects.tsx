@@ -31,6 +31,8 @@ export interface Project {
   technologies?: string[]
   links?: ProjectLink[]
   gallery?: GalleryImage[]
+  /** Captura de portada de la tarjeta; si falta, se usa la primera de la galería */
+  cover?: string
 }
 
 export const projectsData: Project[] = [
@@ -206,6 +208,7 @@ export const projectsData: Project[] = [
     imageAlt: 'Multi Twitch - Logo',
     imgStyle: {padding: 5, paddingLeft: 6, paddingRight: 4},
     titleKey: 'Multi-Twitch',
+    cover: 'https://i.postimg.cc/YCVyf0hV/Multi-Twitch-5-PYFNDA5-G3.png',
     descriptionKey: 'projects.multiTwitch.description',
     longDescriptionKey: 'projects.multiTwitch.longDescription',
     technologies: ['C#', '.NET Framework', 'WinForms', 'Web Scrapping'],

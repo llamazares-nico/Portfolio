@@ -1,5 +1,14 @@
 import React from 'react'
 import {useWindowSize} from 'react-use'
+import {ArrowRight} from 'lucide-react'
+import {useLanguage} from '../../hooks/LanguageContext'
+
+interface ProjectCardLink {
+  icon: React.ReactNode
+  url?: string
+  label?: string
+  onClick?: (e: React.MouseEvent) => void
+}
 
 interface ProjectCardProps {
   number: string
@@ -8,13 +17,110 @@ interface ProjectCardProps {
   image: string
   imageAlt: string
   imgStyle?: React.CSSProperties
+  /** Captura del proyecto: es la imagen principal de la tarjeta */
+  cover?: string
   title: React.ReactNode
   description: React.ReactNode
-  links?: Array<{
-    icon: React.ReactNode
-    onClick?: (e: React.MouseEvent) => void
-  }>
+  links?: ProjectCardLink[]
 }
+
+const CUT_OUTER = 'polygon(0 0, 92% 0, 100% 12%, 100% 100%, 8% 100%, 0 88%)'
+const CUT_INNER =
+  'polygon(0 0, 91.6% 0, 100% 11.5%, 100% 100%, 8.4% 100%, 0 88.5%)'
+const CUT_SMALL =
+  'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))'
+
+/** Captura recortada con el logo del proyecto como sello en la esquina */
+const Cover: React.FC<{
+  cover?: string
+  image: string
+  imageAlt: string
+  imgStyle?: React.CSSProperties
+  title: React.ReactNode
+  aspect: string
+}> = ({cover, image, imageAlt, imgStyle, title, aspect}) => (
+  <div className='relative'>
+    <div className='bg-[#070707] p-1.5' style={{clipPath: CUT_OUTER}}>
+      <div
+        className={`${aspect} overflow-hidden bg-[#0a0a0a]`}
+        style={{clipPath: CUT_INNER}}
+      >
+        {cover ? (
+          <img
+            src={cover}
+            alt={typeof title === 'string' ? `${title} - Captura` : ''}
+            loading='lazy'
+            className='w-full h-full object-cover object-left-top transition-transform duration-500 ease-out group-hover:scale-[1.04]'
+          />
+        ) : (
+          <img
+            src={image}
+            alt={imageAlt}
+            loading='lazy'
+            className='w-full h-full object-contain p-6'
+            style={imgStyle}
+          />
+        )}
+      </div>
+    </div>
+    {cover && (
+      <div
+        className='absolute -bottom-4 left-4 w-13 h-13 bg-[#121212] p-[2px]'
+        style={{clipPath: CUT_SMALL}}
+      >
+        <div
+          className='w-full h-full bg-[#0a0a0a] overflow-hidden'
+          style={{clipPath: CUT_SMALL}}
+        >
+          <img
+            src={image}
+            alt={imageAlt}
+            className='w-full h-full object-cover'
+            style={imgStyle}
+          />
+        </div>
+      </div>
+    )}
+  </div>
+)
+
+const LinkButtons: React.FC<{links: ProjectCardLink[]}> = ({links}) => (
+  <div className='flex flex-row gap-2'>
+    {links.map((link, idx) => (
+      <a
+        key={idx}
+        href={link.url}
+        target='_blank'
+        rel='noopener noreferrer'
+        aria-label={link.label}
+        title={link.label}
+        onClick={(e) => e.stopPropagation()}
+        className='group/link block p-[2px] bg-[#070707] hover:bg-[#0fa] focus-visible:bg-[#0fa] outline-none transition-colors'
+        style={{clipPath: CUT_SMALL}}
+      >
+        <span
+          className='flex items-center justify-center w-9 h-9 bg-[#0e0e0e] text-[#ccc] group-hover/link:text-white transition-colors'
+          style={{clipPath: CUT_SMALL}}
+        >
+          {link.icon}
+        </span>
+      </a>
+    ))}
+  </div>
+)
+
+const ViewProject: React.FC<{label: string}> = ({label}) => (
+  <button
+    type='button'
+    className='oswald-regular uppercase tracking-[2px] text-sm text-[#0fa] flex items-center gap-2 cursor-pointer outline-none focus-visible:underline underline-offset-4'
+  >
+    {label}
+    <ArrowRight
+      size={16}
+      className='transition-transform duration-300 ease-out group-hover:translate-x-1'
+    />
+  </button>
+)
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   number,
@@ -22,123 +128,84 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   icon,
   image,
   imageAlt,
+  cover,
   title,
   description,
   links = [],
   imgStyle = {},
 }) => {
   const {width} = useWindowSize()
-
+  const {t} = useLanguage()
   const isMobile = width <= 768
 
   if (isMobile) {
     return (
-      <div className='mx-6 oswald-regular bg-[#000]/25 h-full border-2 border-[#000]/35 transition-all duration-400 text-start'>
-        <div className='p-4 h-full'>
-          <div className='flex flex-row gap-5 items-start w-full h-full'>
-            <div
-              className='min-w-25 max-w-25 bg-[#070707] p-1 self-center'
-              style={{
-                clipPath:
-                  'polygon(0 0, 83% 0, 100% 17%, 100% 100%, 17% 100%, 0 83%)',
-              }}
-            >
-              <img
-                src={image}
-                className='bg-[#0a0a0a] object-cover object-center p-2'
-                alt={imageAlt}
-                style={{
-                  clipPath:
-                    'polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%)',
-                  ...imgStyle,
-                }}
-              />
-            </div>
-            <div className='flex flex-col w-full gap-2'>
-              <div className='flex flex-row w-full justify-between items-start'>
-                <div className='flex flex-col gap-1'>
-                  <h3 className='text-xl uppercase'>{title}</h3>
-                  <p className='text-[#0fa] text-xs font-[500]'>{category}</p>
-                </div>
-              </div>
-              <p className='font-light'>{description}</p>
-            </div>
-          </div>
+      <div className='group mx-6 bg-[#000]/25 border-2 border-[#000]/35 text-start p-4 cursor-pointer'>
+        <Cover
+          cover={cover}
+          image={image}
+          imageAlt={imageAlt}
+          imgStyle={imgStyle}
+          title={title}
+          aspect='aspect-[16/9]'
+        />
+        <div className={`flex flex-col gap-1 ${cover ? 'mt-7' : 'mt-4'}`}>
+          <h3 className='oswald-regular text-2xl uppercase leading-tight'>
+            {title}
+          </h3>
+          <p className='oswald-regular text-[#0fa] text-xs tracking-wide'>
+            {category}
+          </p>
+        </div>
+        <p className='mt-3 text-[15px] leading-6 text-[#c8c8c8]'>
+          {description}
+        </p>
+        <div className='mt-5 flex flex-row items-center justify-between'>
+          <ViewProject label={t('projects.viewProject')} />
+          {links.length > 0 && <LinkButtons links={links} />}
         </div>
       </div>
     )
   }
 
   return (
-    <div className='oswald-regular bg-[#000]/25 h-full border-2 border-[#000]/35 hover:ring-2 ring-[#0fa] transition-all duration-400 text-start py-6 select-none'>
-      <div className='px-8'>
+    <div className='group relative h-full flex flex-col bg-[#000]/25 border-2 border-[#000]/35 hover:ring-2 has-[:focus-visible]:ring-2 ring-[#0fa] transition-all duration-400 text-start py-6 select-none cursor-pointer'>
+      <div className='px-7 flex flex-col grow'>
         <div className='flex flex-row w-full justify-between items-center'>
-          <div className='flex flex-col'>
-            <h3 className='text-2xl'>{number}</h3>
-            <p className='text-[#0fa] text-xs font-[500]'>{category}</p>
+          <div className='flex flex-col oswald-regular'>
+            <span className='text-2xl'>{number}</span>
+            <span className='text-[#0fa] text-xs font-[500]'>{category}</span>
           </div>
-          <div className='border-3 border-[#121212] rounded-xl w-12 h-12 flex justify-center items-center'>
+          <div className='border-3 border-[#121212] rounded-xl w-12 h-12 flex justify-center items-center text-[#ccc]'>
             {icon}
           </div>
         </div>
-        <div
-          className='w-full h-auto bg-[#070707] p-2 mt-6'
-          style={{
-            clipPath:
-              'polygon(0 0, 83% 0, 100% 17%, 100% 100%, 17% 100%, 0 83%)',
-          }}
-        >
-          <img
-            src={image}
-            className='w-full h-auto bg-[#0a0a0a] object-cover object-center p-4'
-            alt={imageAlt}
-            style={{
-              clipPath:
-                'polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%)',
-              ...imgStyle,
-            }}
+        <div className='mt-6'>
+          <Cover
+            cover={cover}
+            image={image}
+            imageAlt={imageAlt}
+            imgStyle={imgStyle}
+            title={title}
+            aspect='aspect-[4/3]'
           />
         </div>
-        <h4 className='mt-6 text-lg uppercase'>{title}</h4>
-        <p className='mb-2 mt-1 font-light'>{description}</p>
+        <h3
+          className={`oswald-regular text-xl uppercase leading-tight ${cover ? 'mt-8' : 'mt-6'}`}
+        >
+          {title}
+        </h3>
+        <p className='mt-2 text-[15px] leading-6 text-[#c8c8c8]'>
+          {description}
+        </p>
+        <div className='mt-auto pt-5'>
+          <ViewProject label={t('projects.viewProject')} />
+        </div>
       </div>
       {links.length > 0 && (
-        <>
-          <div className='absolute bottom-10 start-0 w-full bg-[#070707] h-[2px]'>
-            <div className='justify-center w-full -top-3.5 flex flex-row gap-2 items-center'></div>
-          </div>
-          <div className='absolute -bottom-5 end-4 w-fit h-fit flex flex-row gap-2'>
-            {links.map((link, idx) => (
-              <div
-                key={idx}
-                className='cursor-pointer select-none p-1 mt-6'
-                onClick={link.onClick}
-                style={{
-                  clipPath:
-                    'polygon(0 0, 92% 0, 100% 15%, 100% 100%, 8% 100%, 0 85%)',
-                }}
-              >
-                <div
-                  className='w-full h-auto object-cover bg-[#070707] hover:bg-[#0fa] transition-colors object-center p-[2px]'
-                  style={{
-                    clipPath:
-                      'polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%)',
-                  }}
-                >
-                  <div
-                    className='w-full flex flex-row gap-2 items-center h-9 bg-[#0e0e0e] hover:bg-[#0a0a0a] transition-colors object-center px-2.5'
-                    style={{
-                      clipPath:
-                        'polygon(0 0, 85% 0, 100% 15%, 100% 100%, 15% 100%, 0 85%)',
-                    }}
-                  >
-                    {link.icon}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
+        <div className='absolute -bottom-5 end-4'>
+          <LinkButtons links={links} />
+        </div>
       )}
     </div>
   )

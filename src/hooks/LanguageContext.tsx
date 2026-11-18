@@ -42,7 +42,7 @@ const translations: Record<Language, Record<string, string>> = {
     'about.p3':
       'In my free time, I explore new technologies and apply them to personal projects like <b>Noche de cine</b> an app that reflects my interest in collaboration and practical problem-solving.',
     'about.p4':
-      'Being close to graduating as a <b>University Programmer Analyst</b> from the National University of La Plata (UNLP), I am actively seeking opportunities to grow as a developer, contribute my knowledge and take on new challenges. I am convinced that my constant curiosity and dedication can be a valuable asset to any team.',
+      'Recently graduated as a <b>University Programmer Analyst</b> from the National University of La Plata (UNLP), I am actively seeking opportunities to grow as a developer, contribute my knowledge and take on new challenges. I am convinced that my constant curiosity and dedication can be a valuable asset to any team.',
 
     // Projects section
     'projects.title': 'PROJECTS >>',
@@ -57,9 +57,9 @@ const translations: Record<Language, Record<string, string>> = {
 
     'projects.cinemaNight': 'Cinema Night',
     'projects.cinemaNight.description':
-      'Voting organizer for movies with friends. Allows proposing, vetting and managing watched/unwatched lists. Made with love and care for my friends and me.',
+      'Full-stack app my group of friends uses to pick what movie to watch: proposals, ranked voting, live results, a session calendar and WhatsApp notifications.',
     'projects.cinemaNight.longDescription':
-      'Cinema Night is a collaborative movie voting platform made for a group of friends to decide what to watch together. Users can propose up to two movies per session, veto films they don’t want to see, and vote by ranking their interest. Once everyone has voted, the app generates a podium to declare the winner. It also includes features like auto-proposals, personalized vetoes, and persistent lists of watched and unwatched movies. The project is built with React.js and uses websockets for real-time updates. It was developed with real social use in mind and continues evolving based on group feedback.',
+      'Cinema Night turns choosing a movie into a group ritual. Each round goes through proposals, ranked voting (Borda count, with visible tie-breakers) and live results, revealed to everyone at once in real time via SignalR. It also has a session calendar, themed weeks, a movie catalog synced daily with TMDb, profiles with stats and an admin panel. It is made of three pieces: a Next.js front end (App Router, Zustand, TanStack Query), a .NET 9 API with Entity Framework Core and PostgreSQL, and a Node.js WhatsApp bot that connects to the API over SignalR to announce each phase. Notifications go through a persistent queue with exponential backoff, and everything runs on free tiers (Vercel, Render, Supabase), so it is designed around tight CPU, memory and query limits. It is a real product with real users: it has been in use for over a year and has shipped more than 20 releases based on my friends’ feedback.',
     'projects.cinemaNight.gallery.descriptionHome':
       'Home screen - With statistics about sessions and movie catalog',
     'projects.cinemaNight.gallery.descriptionMobileHome':
@@ -344,7 +344,7 @@ const translations: Record<Language, Record<string, string>> = {
     'about.p3':
       'En mi tiempo libre, exploro nuevas tecnologías y las aplico a proyectos personales como <b>Noche de cine</b>, una aplicación que refleja mi interés en la colaboración y la resolución práctica de problemas.',
     'about.p4':
-      'Estando a poco de graduarme como <b>Analista Programador Universitario</b> de la Universidad Nacional de La Plata (UNLP), estoy buscando activamente oportunidades para crecer como desarrollador, aportar mis conocimientos y asumir nuevos desafíos. Estoy convencido de que mi constante curiosidad y dedicación pueden ser un activo valioso para cualquier equipo.',
+      'Recientemente recibido como <b>Analista Programador Universitario</b> en la Universidad Nacional de La Plata (UNLP), estoy buscando activamente oportunidades para crecer como desarrollador, aportar mis conocimientos y asumir nuevos desafíos. Estoy convencido de que mi constante curiosidad y dedicación pueden ser un activo valioso para cualquier equipo.',
 
     // Projects section
     'projects.title': 'PROYECTOS >>',
@@ -359,9 +359,9 @@ const translations: Record<Language, Record<string, string>> = {
 
     'projects.cinemaNight': 'Noche de cine',
     'projects.cinemaNight.description':
-      'Organizador de votaciones para ver películas con amigos. Permite proponer, vetar y gestionar listas de vistas/no vistas. Hecha con mucho amor y cariño para mis amigos y yo.',
+      'App full-stack que usa mi grupo de amigos para elegir qué película ver: propuestas, votación por ranking, resultados en vivo, calendario de sesiones y avisos por WhatsApp.',
     'projects.cinemaNight.longDescription':
-      'Noche de Cine es una aplicación web pensada para organizar votaciones de películas entre amigos. Cada usuario puede proponer hasta 2 películas por votación, vetar aquellas que no desea ver si no participa, y gestionar sus listas de películas vistas y no vistas. Durante la fase de votación, los usuarios ordenan las películas según sus preferencias, y el sistema genera un podio una vez que todos han votado. El proyecto surgió de una necesidad real con mis amigos, y fue creciendo con el tiempo hasta convertirse en una herramienta completa hecha con React y WebSockets.',
+      'Noche de cine convierte la elección de la película en un ritual del grupo. Cada ronda pasa por propuestas, votación por ranking (conteo Borda, con desempates visibles) y resultados en vivo, que se revelan a todos a la vez en tiempo real con SignalR. Además tiene calendario de sesiones, semanas temáticas, un catálogo sincronizado a diario con TMDb, perfiles con estadísticas y un panel de administración. Está hecha en tres partes: un front en Next.js (App Router, Zustand, TanStack Query), una API en .NET 9 con Entity Framework Core y PostgreSQL, y un bot de WhatsApp en Node.js que se conecta a la API por SignalR para avisar cada fase. Las notificaciones pasan por una cola persistente con reintentos exponenciales, y todo corre en planes gratuitos (Vercel, Render, Supabase), así que está pensada para trabajar con poco CPU, poca memoria y pocas consultas. Es un producto real con usuarios reales: se usa hace más de un año y lleva más de 20 versiones publicadas a partir del feedback de mis amigos.',
     'projects.cinemaNight.gallery.descriptionHome':
       'Pantalla principal - Con estadísticas sobre las sesiones y el catálogo de películas',
     'projects.cinemaNight.gallery.descriptionMobileHome':

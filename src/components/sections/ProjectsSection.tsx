@@ -113,64 +113,369 @@ const ProjectsSection: React.FC = () => {
     })
   }, [projects])
 
+  // Modal con detalles del proyecto y lista de otros proyectos (mobile y escritorio)
+  const modal =
+    selectedProject !== null && selectedProjectData ? (
+      <Modal onClose={() => setSelectedProject(null)}>
+        <div className='p-0 h-[100dvh]'>
+          <div className='h-full flex flex-col justify-between'>
+            {/* Header: Título e imagen del proyecto seleccionado */}
+            <div className='bg-[#121212] px-2 pb-2'>
+              <div className='flex flex-row items-center gap-5 bg-[#0C0C0C]'>
+                <img
+                  src={selectedProjectData.image}
+                  alt={selectedProjectData.imageAlt}
+                  className='w-26 h-26 p-3 object-cover border-r-2 border-[#121212] bg-[#000]/35'
+                />
+                <div className='flex flex-col grow'>
+                  <h2 className='text-3xl oswald-regular uppercase'>
+                    {selectedProjectData.title}
+                  </h2>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-[#0fa] text-sm'>
+                      {selectedProjectData.category}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='flex flex-col md:flex-row justify-center items-center w-full h-full min-h-0 overflow-hidden mx-auto'>
+              {selectedProjectData.gallery &&
+                selectedProjectData.gallery.length > 0 && (
+                  <div className='h-[45%] w-full md:h-full md:w-[70%] shrink-0 bg-[#0A0A0A] md:border-l-10 border-[#0C0C0C]'>
+                    <div
+                      className='w-full relative'
+                      style={{
+                        height:
+                          selectedProjectData.gallery &&
+                          selectedProjectData.gallery.length > 1
+                            ? '85%'
+                            : '100%',
+                      }}
+                    >
+                      <AnimatePresence mode='wait'>
+                        {selectedProjectImage?.src.endsWith('.mp4') ? (
+                          <motion.video
+                            key={selectedProjectImage.src} // Importante para que Framer Motion detecte el cambio
+                            initial={{opacity: 0}}
+                            animate={{opacity: 1}}
+                            exit={{opacity: 0}}
+                            transition={{duration: 0.3}}
+                            src={selectedProjectImage.src}
+                            controls
+                            autoPlay
+                            loop
+                            muted
+                            style={{
+                              objectFit: 'scale-down',
+                              ...(selectedProjectImage?.style || {}),
+                            }}
+                            className='w-full h-full py-10'
+                          ></motion.video>
+                        ) : (
+                          <motion.img
+                            key={
+                              selectedProjectImage
+                                ? selectedProjectImage.src
+                                : selectedProjectData.image
+                            } // Importante para que Framer Motion detecte el cambio
+                            initial={{opacity: 0}}
+                            animate={{opacity: 1}}
+                            exit={{opacity: 0}}
+                            transition={{duration: 0.3}}
+                            src={
+                              selectedProjectImage
+                                ? selectedProjectImage.src
+                                : selectedProjectData.image
+                            }
+                            alt={
+                              selectedProjectImage
+                                ? selectedProjectImage.alt
+                                : selectedProjectData.imageAlt
+                            }
+                            style={{
+                              objectFit: 'scale-down',
+                              ...(selectedProjectImage?.style || {}),
+                            }}
+                            className='w-full h-full'
+                          />
+                        )}
+                      </AnimatePresence>
+                      {selectedProjectImage?.descriptionKey ? (
+                        <div
+                          className='absolute bottom-0 right-0 -bg-linear-240 from-[#111]/90 from-10% via-[#111]/95 via-30% to-[#111] to-90% p-2 ps-5 pe-3'
+                          style={{
+                            clipPath:
+                              'polygon(13px 0, 100% 0%, 100% 100%, 0 100%)',
+                          }}
+                        >
+                          <p className='text-[#aaa] text-sm'>
+                            {t(selectedProjectImage.descriptionKey)}
+                          </p>
+                        </div>
+                      ) : null}
+                    </div>
+                    {selectedProjectData.gallery &&
+                      selectedProjectData.gallery.length > 1 && (
+                        <div className='h-[15%] w-full flex flex-row justify-between bg-[#070707]'>
+                          <div
+                            className='h-full bg px-2 cursor-pointer bg-[#050505] hover:bg-[#090909] transition-all flex justify-center items-center'
+                            onClick={() => {
+                              const galleryContainer =
+                                document.querySelector('.gallery-container')
+                              if (galleryContainer) {
+                                galleryContainer.scrollLeft -= 400 // Ajusta este valor según necesites
+                              }
+                            }}
+                          >
+                            <ChevronLeft />
+                          </div>
+                          <div
+                            className='py-6 px-5 overflow-hidden flex flex-row gap-3 h-full items-center justify-start gallery-container bg-[#070707]'
+                            style={{
+                              scrollBehavior: 'smooth',
+                              scrollSnapAlign: 'start',
+                              scrollSnapType: 'x mandatory',
+                              scrollSnapStop: 'always',
+                            }}
+                          >
+                            {selectedProjectData.gallery &&
+                              selectedProjectData.gallery.map((x, index) =>
+                                x.src.endsWith('.mp4') ? (
+                                  <div
+                                    onClick={() => setSelectedProjectImage(x)}
+                                    key={index}
+                                    className={`w-22 h-14 cursor-pointer border-1 relative ${
+                                      selectedProjectImage &&
+                                      selectedProjectImage.src === x.src
+                                        ? 'border-[#0fa] opacity-100'
+                                        : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
+                                    } transition-all`}
+                                  >
+                                    {/* Imagen de previsualización para videos */}
+                                    <img
+                                      src={x.thumbnailSrc || ''}
+                                      alt={x.alt}
+                                      className='w-full h-full object-cover'
+                                    />
+                                    {/* Indicador de video */}
+                                    <div className='absolute inset-0 flex items-center justify-center'>
+                                      <div className='w-5 h-5 bg-black/50 rounded-full flex items-center justify-center'>
+                                        <div className='w-0 h-0 border-t-[4px] border-t-transparent border-l-[6px] border-l-white border-b-[4px] border-b-transparent ml-0.5'></div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <img
+                                    onClick={() => setSelectedProjectImage(x)}
+                                    key={index}
+                                    src={x.src}
+                                    alt={x.alt}
+                                    className={`w-22 h-14 cursor-pointer border-1 ${
+                                      selectedProjectImage &&
+                                      selectedProjectImage.src === x.src
+                                        ? 'border-[#0fa] opacity-100'
+                                        : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
+                                    } transition-all object-cover`}
+                                  />
+                                )
+                              )}
+                          </div>
+                          <div
+                            className='h-full bg px-2 cursor-pointer bg-[#050505] hover:bg-[#090909] transition-all flex justify-center items-center'
+                            onClick={() => {
+                              const galleryContainer =
+                                document.querySelector('.gallery-container')
+                              if (galleryContainer) {
+                                galleryContainer.scrollLeft += 400 // Ajusta este valor según necesites
+                              }
+                            }}
+                          >
+                            <ChevronRight />
+                          </div>
+                        </div>
+                      )}
+                  </div>
+                )}
+              <div
+                className={`h-full ${
+                  selectedProjectData.gallery &&
+                  selectedProjectData.gallery.length > 0
+                    ? 'w-full md:w-[30%]'
+                    : 'w-full'
+                } min-h-0 flex-1 md:flex-none bg-[#070707] backdrop-blur-2xl overflow-y-auto p-5 md:border-l-6 border-[#0C0C0C]`}
+              >
+                <div className='mb-6'>
+                  <h3 className='text-xl oswald-regular uppercase mb-2'>
+                    {t('projects.description')}
+                  </h3>
+                  <p
+                    className='leading-6'
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        selectedProjectData.longDescription ||
+                        selectedProjectData.description,
+                    }}
+                  />
+                </div>
+                {selectedProjectData.technologies && (
+                  <div className='mb-6'>
+                    <h3 className='text-xl oswald-regular uppercase mb-3'>
+                      {t('projects.technologies')}
+                    </h3>
+                    <div className='flex flex-wrap gap-2'>
+                      {selectedProjectData.technologies.map((tech, index) => (
+                        <div
+                          key={index}
+                          className='bg-[#000]/25 px-3 py-1 text-sm border-1 border-[#252525]/50 border-l-[#097] border-l-3'
+                        >
+                          {tech}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {selectedProjectData.links &&
+                  selectedProjectData.links.length > 0 && (
+                    <div className='mb-6'>
+                      <h3 className='text-xl oswald-regular uppercase mb-3'>
+                        {t('projects.links')}
+                      </h3>
+                      <div className='flex gap-4'>
+                        {selectedProjectData.links.map((link, index) => (
+                          <a
+                            key={index}
+                            href={link.url}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                            className='bg-[#070707] flex items-center gap-2 border-l-[#097] border-l-3 transition-colors px-3 py-1 border-1 border-[#252525]/50 hover:border-[#097] hover:bg-[#097]/10 hover:text-[#097] text-sm text-[#aaa]'
+                          >
+                            {link.icon}
+                            {link.label && <span>{link.label}</span>}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+              </div>
+            </div>
+
+            {/* Columna derecha: Lista de otros proyectos */}
+            <div className='bg-[#121212] px-2 pt-2'>
+              <div className='bg-[#0C0C0C] p-2 px-5'>
+                <h3 className='oswald-regular uppercase mt-1 mb-1 text-[22px]'>
+                  {t('projects.allOfMyProjects')}
+                </h3>
+                <div className='flex flex-row gap-3 overflow-x-scroll py-2'>
+                  {projects.map((project) => (
+                    <div
+                      key={project.id}
+                      className={`flex items-center gap-4 p-0.5 cursor-pointer select-none transition-colors ${
+                        selectedProject === project.id
+                          ? 'bg-[#0fa]/75'
+                          : 'bg-[#070707] hover:bg-[#777]'
+                      }`}
+                      onClick={() => setSelectedProject(project.id)}
+                      style={{
+                        clipPath:
+                          'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))',
+                      }}
+                    >
+                      <div
+                        className='flex flex-row w-50 items-center gap-2 bg-[#121212]'
+                        style={{
+                          clipPath:
+                            'polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                        }}
+                      >
+                        <div className='w-12 h-12 overflow-hidden'>
+                          <img
+                            src={project.image}
+                            alt={project.imageAlt}
+                            style={project.imgStyle || {}}
+                            className='w-12 h-12 object-cover border-[#070707] border-r-1'
+                          />
+                        </div>
+                        <div className='max-w-34'>
+                          <h5 className='font-bold text-[16px] -mt-0.5 truncate uppercase'>
+                            {project.title}
+                          </h5>
+                          <p className='text-[10px] text-[#0fa] -mt-0.5'>
+                            {project.category}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    ) : null
+
   // Renderizar para móviles
   if (isMobile) {
     return (
-      <motion.div
-        id='projects'
-        className='min-h-[85vh] flex flex-col gap-5 pt-25 pb-15'
-        variants={stagger}
-        initial='hidden'
-        whileInView='visible'
-        viewport={{once: true, amount: 0.3}}
-      >
+      <>
         <motion.div
-          className='text-end flex items-start pt-3 pe-10 justify-end text-[#fff] font-bold oswald-regular pb-5'
-          variants={{
-            hidden: {opacity: 0, x: 75},
-            visible: {
-              opacity: 1,
-              x: 0,
-              transition: {duration: 0.5, ease: 'easeOut'},
-            },
-          }}
+          id='projects'
+          className='min-h-[85vh] flex flex-col gap-5 pt-25 pb-15'
+          variants={stagger}
+          initial='hidden'
+          whileInView='visible'
+          viewport={{once: true, amount: 0.3}}
         >
-          <h1>{t('projects.title')}</h1>
-        </motion.div>
-
-        {/* Mostrar solo los primeros 4 proyectos en la vista principal */}
-        {projects.slice(0, 4).map((project, index) => (
           <motion.div
-            key={project.id}
-            className='relative'
-            variants={
-              index === 0
-                ? fadeInUp
-                : {
-                    hidden: {opacity: 0, y: 60},
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: {duration: 0.7, ease: 'easeOut'},
-                    },
-                  }
-            }
-            onClick={() => setSelectedProject(project.id)}
+            className='text-end flex items-start pt-3 pe-10 justify-end text-[#fff] font-bold oswald-regular pb-5'
+            variants={{
+              hidden: {opacity: 0, x: 75},
+              visible: {
+                opacity: 1,
+                x: 0,
+                transition: {duration: 0.5, ease: 'easeOut'},
+              },
+            }}
           >
-            <ProjectCard
-              number={`#${project.id.toString().padStart(2, '0')}`}
-              category={project.category}
-              icon={project.icon}
-              image={project.image}
-              imageAlt={project.imageAlt}
-              title={project.title}
-              description={project.description}
-              links={project.links}
-              imgStyle={project.imgStyle}
-            />
+            <h1>{t('projects.title')}</h1>
           </motion.div>
-        ))}
-      </motion.div>
+
+          {/* Mostrar solo los primeros 4 proyectos en la vista principal */}
+          {projects.slice(0, 4).map((project, index) => (
+            <motion.div
+              key={project.id}
+              className='relative'
+              variants={
+                index === 0
+                  ? fadeInUp
+                  : {
+                      hidden: {opacity: 0, y: 60},
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: {duration: 0.7, ease: 'easeOut'},
+                      },
+                    }
+              }
+              onClick={() => setSelectedProject(project.id)}
+            >
+              <ProjectCard
+                number={`#${project.id.toString().padStart(2, '0')}`}
+                category={project.category}
+                icon={project.icon}
+                image={project.image}
+                imageAlt={project.imageAlt}
+                title={project.title}
+                description={project.description}
+                links={project.links}
+                imgStyle={project.imgStyle}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+        {modal}
+      </>
     )
   }
 
@@ -200,6 +505,7 @@ const ProjectsSection: React.FC = () => {
             title={projects[0]?.title || ''}
             description={projects[0]?.description || ''}
             links={projects[0]?.links || []}
+            imgStyle={projects[0]?.imgStyle}
           />
         </motion.div>
         <motion.div
@@ -270,6 +576,7 @@ const ProjectsSection: React.FC = () => {
             title={projects[2]?.title || ''}
             description={projects[2]?.description || ''}
             links={[]}
+            imgStyle={projects[2]?.imgStyle}
           />
         </motion.div>
         <motion.div
@@ -299,306 +606,7 @@ const ProjectsSection: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* Modal mejorado con detalles del proyecto y lista de otros proyectos */}
-      {selectedProject !== null && selectedProjectData && (
-        <Modal onClose={() => setSelectedProject(null)}>
-          <div className='p-0 h-[100dvh]'>
-            <div className='h-full flex flex-col justify-between'>
-              {/* Header: Título e imagen del proyecto seleccionado */}
-              <div className='bg-[#121212] px-2 pb-2'>
-                <div className='flex flex-row items-center gap-5 bg-[#0C0C0C]'>
-                  <img
-                    src={selectedProjectData.image}
-                    alt={selectedProjectData.imageAlt}
-                    className='w-26 h-26 p-3 object-cover border-r-2 border-[#121212] bg-[#000]/35'
-                  />
-                  <div className='flex flex-col grow'>
-                    <h2 className='text-3xl oswald-regular uppercase'>
-                      {selectedProjectData.title}
-                    </h2>
-                    <div className='flex items-center gap-2'>
-                      <span className='text-[#0fa] text-sm'>
-                        {selectedProjectData.category}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className='flex flex-row justify-center items-center w-full h-full overflow-hidden mx-auto'>
-                {selectedProjectData.gallery &&
-                  selectedProjectData.gallery.length > 0 && (
-                    <div className='h-full w-[70%] bg-[#0A0A0A] border-l-10 border-[#0C0C0C]'>
-                      <div
-                        className='w-full relative'
-                        style={{
-                          height:
-                            selectedProjectData.gallery &&
-                            selectedProjectData.gallery.length > 1
-                              ? '85%'
-                              : '100%',
-                        }}
-                      >
-                        <AnimatePresence mode='wait'>
-                          {selectedProjectImage?.src.endsWith('.mp4') ? (
-                            <motion.video
-                              key={selectedProjectImage.src} // Importante para que Framer Motion detecte el cambio
-                              initial={{opacity: 0}}
-                              animate={{opacity: 1}}
-                              exit={{opacity: 0}}
-                              transition={{duration: 0.3}}
-                              src={selectedProjectImage.src}
-                              controls
-                              autoPlay
-                              loop
-                              muted
-                              style={{
-                                objectFit: 'scale-down',
-                                ...(selectedProjectImage?.style || {}),
-                              }}
-                              className='w-full h-full py-10'
-                            ></motion.video>
-                          ) : (
-                            <motion.img
-                              key={
-                                selectedProjectImage
-                                  ? selectedProjectImage.src
-                                  : selectedProjectData.image
-                              } // Importante para que Framer Motion detecte el cambio
-                              initial={{opacity: 0}}
-                              animate={{opacity: 1}}
-                              exit={{opacity: 0}}
-                              transition={{duration: 0.3}}
-                              src={
-                                selectedProjectImage
-                                  ? selectedProjectImage.src
-                                  : selectedProjectData.image
-                              }
-                              alt={
-                                selectedProjectImage
-                                  ? selectedProjectImage.alt
-                                  : selectedProjectData.imageAlt
-                              }
-                              style={{
-                                objectFit: 'scale-down',
-                                ...(selectedProjectImage?.style || {}),
-                              }}
-                              className='w-full h-full'
-                            />
-                          )}
-                        </AnimatePresence>
-                        {selectedProjectImage?.descriptionKey ? (
-                          <div
-                            className='absolute bottom-0 right-0 -bg-linear-240 from-[#111]/90 from-10% via-[#111]/95 via-30% to-[#111] to-90% p-2 ps-5 pe-3'
-                            style={{
-                              clipPath:
-                                'polygon(13px 0, 100% 0%, 100% 100%, 0 100%)',
-                            }}
-                          >
-                            <p className='text-[#aaa] text-sm'>
-                              {t(selectedProjectImage.descriptionKey)}
-                            </p>
-                          </div>
-                        ) : null}
-                      </div>
-                      {selectedProjectData.gallery &&
-                        selectedProjectData.gallery.length > 1 && (
-                          <div className='h-[15%] w-full flex flex-row justify-between bg-[#070707]'>
-                            <div
-                              className='h-full bg px-2 cursor-pointer bg-[#050505] hover:bg-[#090909] transition-all flex justify-center items-center'
-                              onClick={() => {
-                                const galleryContainer =
-                                  document.querySelector('.gallery-container')
-                                if (galleryContainer) {
-                                  galleryContainer.scrollLeft -= 400 // Ajusta este valor según necesites
-                                }
-                              }}
-                            >
-                              <ChevronLeft />
-                            </div>
-                            <div
-                              className='py-6 px-5 overflow-hidden flex flex-row gap-3 h-full items-center justify-start gallery-container bg-[#070707]'
-                              style={{
-                                scrollBehavior: 'smooth',
-                                scrollSnapAlign: 'start',
-                                scrollSnapType: 'x mandatory',
-                                scrollSnapStop: 'always',
-                              }}
-                            >
-                              {selectedProjectData.gallery &&
-                                selectedProjectData.gallery.map((x, index) =>
-                                  x.src.endsWith('.mp4') ? (
-                                    <div
-                                      onClick={() => setSelectedProjectImage(x)}
-                                      key={index}
-                                      className={`w-22 h-14 cursor-pointer border-1 relative ${
-                                        selectedProjectImage &&
-                                        selectedProjectImage.src === x.src
-                                          ? 'border-[#0fa] opacity-100'
-                                          : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
-                                      } transition-all`}
-                                    >
-                                      {/* Imagen de previsualización para videos */}
-                                      <img
-                                        src={x.thumbnailSrc || ''}
-                                        alt={x.alt}
-                                        className='w-full h-full object-cover'
-                                      />
-                                      {/* Indicador de video */}
-                                      <div className='absolute inset-0 flex items-center justify-center'>
-                                        <div className='w-5 h-5 bg-black/50 rounded-full flex items-center justify-center'>
-                                          <div className='w-0 h-0 border-t-[4px] border-t-transparent border-l-[6px] border-l-white border-b-[4px] border-b-transparent ml-0.5'></div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ) : (
-                                    <img
-                                      onClick={() => setSelectedProjectImage(x)}
-                                      key={index}
-                                      src={x.src}
-                                      alt={x.alt}
-                                      className={`w-22 h-14 cursor-pointer border-1 ${
-                                        selectedProjectImage &&
-                                        selectedProjectImage.src === x.src
-                                          ? 'border-[#0fa] opacity-100'
-                                          : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
-                                      } transition-all object-cover`}
-                                    />
-                                  )
-                                )}
-                            </div>
-                            <div
-                              className='h-full bg px-2 cursor-pointer bg-[#050505] hover:bg-[#090909] transition-all flex justify-center items-center'
-                              onClick={() => {
-                                const galleryContainer =
-                                  document.querySelector('.gallery-container')
-                                if (galleryContainer) {
-                                  galleryContainer.scrollLeft += 400 // Ajusta este valor según necesites
-                                }
-                              }}
-                            >
-                              <ChevronRight />
-                            </div>
-                          </div>
-                        )}
-                    </div>
-                  )}
-                <div
-                  className={`h-full ${
-                    selectedProjectData.gallery &&
-                    selectedProjectData.gallery.length > 0
-                      ? 'w-[35%]'
-                      : 'w-full'
-                  } bg-[#070707] backdrop-blur-2xl overflow-y-scroll p-5 border-l-6 border-[#0C0C0C]`}
-                >
-                  <div className='mb-6'>
-                    <h3 className='text-xl oswald-regular uppercase mb-2'>
-                      {t('projects.description')}
-                    </h3>
-                    <p
-                      className='leading-6'
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          selectedProjectData.longDescription ||
-                          selectedProjectData.description,
-                      }}
-                    />
-                  </div>
-                  {selectedProjectData.technologies && (
-                    <div className='mb-6'>
-                      <h3 className='text-xl oswald-regular uppercase mb-3'>
-                        {t('projects.technologies')}
-                      </h3>
-                      <div className='flex flex-wrap gap-2'>
-                        {selectedProjectData.technologies.map((tech, index) => (
-                          <div
-                            key={index}
-                            className='bg-[#000]/25 px-3 py-1 text-sm border-1 border-[#252525]/50 border-l-[#097] border-l-3'
-                          >
-                            {tech}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {selectedProjectData.links &&
-                    selectedProjectData.links.length > 0 && (
-                      <div className='mb-6'>
-                        <h3 className='text-xl oswald-regular uppercase mb-3'>
-                          {t('projects.links')}
-                        </h3>
-                        <div className='flex gap-4'>
-                          {selectedProjectData.links.map((link, index) => (
-                            <a
-                              key={index}
-                              href={link.url}
-                              target='_blank'
-                              rel='noopener noreferrer'
-                              className='bg-[#070707] flex items-center gap-2 border-l-[#097] border-l-3 transition-colors px-3 py-1 border-1 border-[#252525]/50 hover:border-[#097] hover:bg-[#097]/10 hover:text-[#097] text-sm text-[#aaa]'
-                            >
-                              {link.icon}
-                              {link.label && <span>{link.label}</span>}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                </div>
-              </div>
-
-              {/* Columna derecha: Lista de otros proyectos */}
-              <div className='bg-[#121212] px-2 pt-2'>
-                <div className='bg-[#0C0C0C] p-2 px-5'>
-                  <h3 className='oswald-regular uppercase mt-1 mb-1 text-[22px]'>
-                    {t('projects.allOfMyProjects')}
-                  </h3>
-                  <div className='flex flex-row gap-3 overflow-x-scroll py-2'>
-                    {projects.map((project) => (
-                      <div
-                        key={project.id}
-                        className={`flex items-center gap-4 p-0.5 cursor-pointer select-none transition-colors ${
-                          selectedProject === project.id
-                            ? 'bg-[#0fa]/75'
-                            : 'bg-[#070707] hover:bg-[#777]'
-                        }`}
-                        onClick={() => setSelectedProject(project.id)}
-                        style={{
-                          clipPath:
-                            'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))',
-                        }}
-                      >
-                        <div
-                          className='flex flex-row w-50 items-center gap-2 bg-[#121212]'
-                          style={{
-                            clipPath:
-                              'polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
-                          }}
-                        >
-                          <div className='w-12 h-12 overflow-hidden'>
-                            <img
-                              src={project.image}
-                              alt={project.imageAlt}
-                              style={project.imgStyle || {}}
-                              className='w-12 h-12 object-cover border-[#070707] border-r-1'
-                            />
-                          </div>
-                          <div className='max-w-34'>
-                            <h5 className='font-bold text-[16px] -mt-0.5 truncate uppercase'>
-                              {project.title}
-                            </h5>
-                            <p className='text-[10px] text-[#0fa] -mt-0.5'>
-                              {project.category}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Modal>
-      )}
+      {modal}
     </>
   )
 }

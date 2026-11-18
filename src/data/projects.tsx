@@ -1,6 +1,7 @@
 // src/data/projects.ts
 import {Globe, Monitor, Github, Download, Joystick} from 'lucide-react'
 import PokeduxIcon from '../assets/projects/Pokedux.svg'
+import CinemaNightLogo from '../assets/projects/CinemaNight.svg'
 
 export interface ProjectLink {
   icon: React.ReactNode
@@ -37,32 +38,35 @@ export const projectsData: Project[] = [
     id: 1,
     categoryKey: 'projects.webDevelopment',
     icon: <Globe />,
-    image: 'https://i.postimg.cc/kBrTRGGd/Noite.webp',
+    image: CinemaNightLogo,
     imageAlt: 'Noche de cine - Logo',
-    imgStyle: {padding: 7},
+    imgStyle: {padding: 0},
     titleKey: 'projects.cinemaNight',
     descriptionKey: 'projects.cinemaNight.description',
     longDescriptionKey: 'projects.cinemaNight.longDescription',
     technologies: [
-      'Next.JS',
-      'React.JS',
+      'Next.js',
+      'React',
+      'Zustand',
+      'TanStack Query',
+      'SignalR',
       'Framer Motion',
-      'Bootstrap',
       'C#',
-      '.NET',
-      'REST API',
-      'Entity Framework',
-      'CRUD',
-      'Swagger',
-      'Supabase',
+      '.NET 9',
+      'ASP.NET Core',
+      'Entity Framework Core',
       'PostgreSQL',
-      'Cron Jobs',
+      'Supabase',
+      'Node.js',
+      'WhatsApp Bot',
+      'TMDb API',
+      'Docker',
     ],
     links: [
       {
         icon: <Github size={18} />,
         label: 'GitHub',
-        url: 'https://github.com/Webyven/CinemaNight',
+        url: 'https://github.com/llamazares-nico/CinemaNight',
       },
       {
         icon: <Globe size={18} />,
@@ -155,7 +159,7 @@ export const projectsData: Project[] = [
       {
         icon: <Github size={18} />,
         label: 'GitHub',
-        url: 'https://github.com/Webyven/PoolCounters',
+        url: 'https://github.com/llamazares-nico/PoolCounters',
       },
       {
         icon: <Download size={18} />,
@@ -598,7 +602,7 @@ export const projectsData: Project[] = [
       {
         icon: <Github size={18} />,
         label: 'GitHub',
-        url: 'https://github.com/Webyven/Portfolio/',
+        url: 'https://github.com/llamazares-nico/Portfolio/',
       },
     ],
   },
@@ -617,7 +621,7 @@ export const projectsData: Project[] = [
       {
         icon: <Github size={18} />,
         label: 'GitHub',
-        url: 'https://github.com/Webyven/DnD-Spell-Card-Generator',
+        url: 'https://github.com/llamazares-nico/DnD-Spell-Card-Generator',
       },
     ],
   },
@@ -640,7 +644,7 @@ export const projectsData: Project[] = [
       {
         icon: <Github size={18} />,
         label: 'GitHub',
-        url: 'https://github.com/Webyven/Pokedux',
+        url: 'https://github.com/llamazares-nico/Pokedux',
       },
       {
         icon: <Globe size={18} />,
@@ -695,7 +699,7 @@ export const projectsData: Project[] = [
       {
         icon: <Github size={18} />,
         label: 'GitHub',
-        url: 'https://github.com/Webyven/FilenameChanger',
+        url: 'https://github.com/llamazares-nico/FilenameChanger',
       },
     ],
     gallery: [
@@ -779,7 +783,7 @@ export const projectsData: Project[] = [
       {
         icon: <Github size={18} />,
         label: 'GitHub',
-        url: 'https://github.com/Webyven/Github-Searcher',
+        url: 'https://github.com/llamazares-nico/Github-Searcher',
       },
       {
         icon: <Globe size={18} />,
@@ -802,7 +806,7 @@ export const projectsData: Project[] = [
       {
         icon: <Github size={18} />,
         label: 'GitHub',
-        url: 'https://github.com/Webyven/Google-Clone',
+        url: 'https://github.com/llamazares-nico/Google-Clone',
       },
       {
         icon: <Globe size={18} />,

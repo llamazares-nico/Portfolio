@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* Verde de acento único del sitio */
+@theme {
+  --color-accent: #00ffaa;
+}
+
+/* Corte en diagonal (esquina superior derecha e inferior izquierda); tamaño con --cut */
+@utility cut {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--cut, 8px)) 0,
+    100% var(--cut, 8px),
+    100% 100%,
+    var(--cut, 8px) 100%,
+    0 calc(100% - var(--cut, 8px))
+  );
+}
+
 #root {
   width: 100%;
   text-align: center;

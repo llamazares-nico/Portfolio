@@ -3,6 +3,7 @@ import {AnimatePresence, motion} from 'framer-motion'
 import {stagger, fadeInUp} from '../../animations/variants'
 import {useLanguage} from '../../hooks/LanguageContext'
 import ProjectCard from './ProjectCard'
+import SectionHeading from '../common/SectionHeading'
 import {useWindowSize} from 'react-use'
 import Modal from '../common/Modal'
 import {GalleryImage, projectsData} from '../../data/projects'
@@ -135,7 +136,7 @@ const ProjectsSection: React.FC = () => {
                     {selectedProjectData.title}
                   </h2>
                   <div className='flex items-center gap-2'>
-                    <span className='text-[#0fa] text-sm'>
+                    <span className='text-accent text-sm'>
                       {selectedProjectData.category}
                     </span>
                   </div>
@@ -251,7 +252,7 @@ const ProjectsSection: React.FC = () => {
                                     className={`w-22 h-14 cursor-pointer border-1 relative ${
                                       selectedProjectImage &&
                                       selectedProjectImage.src === x.src
-                                        ? 'border-[#0fa] opacity-100'
+                                        ? 'border-accent opacity-100'
                                         : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
                                     } transition-all`}
                                   >
@@ -277,7 +278,7 @@ const ProjectsSection: React.FC = () => {
                                     className={`w-22 h-14 cursor-pointer border-1 ${
                                       selectedProjectImage &&
                                       selectedProjectImage.src === x.src
-                                        ? 'border-[#0fa] opacity-100'
+                                        ? 'border-accent opacity-100'
                                         : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
                                     } transition-all object-cover`}
                                   />
@@ -306,7 +307,7 @@ const ProjectsSection: React.FC = () => {
                   selectedProjectData.gallery.length > 0
                     ? 'w-full md:w-[30%]'
                     : 'w-full'
-                } min-h-0 flex-1 md:flex-none bg-[#070707] backdrop-blur-2xl overflow-y-auto p-5 md:border-l-6 border-[#0C0C0C]`}
+                } min-h-0 flex-1 md:flex-none bg-[#070707] backdrop-blur-2xl overflow-y-auto p-5 md:shadow-[inset_6px_0_0_#0C0C0C]`}
               >
                 <div className='mb-6'>
                   <h3 className='text-xl oswald-regular uppercase mb-2'>
@@ -330,7 +331,7 @@ const ProjectsSection: React.FC = () => {
                       {selectedProjectData.technologies.map((tech, index) => (
                         <div
                           key={index}
-                          className='bg-[#000]/25 px-3 py-1 text-sm border-1 border-[#252525]/50 border-l-[#097] border-l-3'
+                          className='cut [--cut:6px] bg-[#000]/40 px-3 py-1 text-sm text-[#d4d4d4]'
                         >
                           {tech}
                         </div>
@@ -351,7 +352,7 @@ const ProjectsSection: React.FC = () => {
                             href={link.url}
                             target='_blank'
                             rel='noopener noreferrer'
-                            className='bg-[#070707] flex items-center gap-2 border-l-[#097] border-l-3 transition-colors px-3 py-1 border-1 border-[#252525]/50 hover:border-[#097] hover:bg-[#097]/10 hover:text-[#097] text-sm text-[#aaa]'
+                            className='cut [--cut:8px] bg-[#151515] flex items-center gap-2 px-3 py-1.5 text-sm text-[#c8c8c8] hover:bg-accent/15 hover:text-white focus-visible:bg-accent/15 outline-none transition-colors'
                           >
                             {link.icon}
                             {link.label && <span>{link.label}</span>}
@@ -375,7 +376,7 @@ const ProjectsSection: React.FC = () => {
                       key={project.id}
                       className={`flex items-center gap-4 p-0.5 cursor-pointer select-none transition-colors ${
                         selectedProject === project.id
-                          ? 'bg-[#0fa]/75'
+                          ? 'bg-accent/75'
                           : 'bg-[#070707] hover:bg-[#777]'
                       }`}
                       onClick={() => setSelectedProject(project.id)}
@@ -403,7 +404,7 @@ const ProjectsSection: React.FC = () => {
                           <h5 className='font-bold text-[16px] -mt-0.5 truncate uppercase'>
                             {project.title}
                           </h5>
-                          <p className='text-[10px] text-[#0fa] -mt-0.5'>
+                          <p className='text-[10px] text-accent -mt-0.5'>
                             {project.category}
                           </p>
                         </div>
@@ -472,7 +473,7 @@ const ProjectsSection: React.FC = () => {
             <button
               type='button'
               onClick={() => setSelectedProject(project.id)}
-              className='group w-full p-[2px] bg-[#070707] hover:bg-[#0fa]/75 focus-visible:bg-[#0fa] outline-none transition-colors cursor-pointer text-start'
+              className='group w-full p-[2px] bg-[#070707] hover:bg-accent/75 focus-visible:bg-accent outline-none transition-colors cursor-pointer text-start'
               style={{
                 clipPath:
                   'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))',
@@ -498,7 +499,7 @@ const ProjectsSection: React.FC = () => {
                   <span className='oswald-regular uppercase text-[16px] truncate'>
                     {project.title}
                   </span>
-                  <span className='oswald-regular text-[11px] text-[#0fa] truncate'>
+                  <span className='oswald-regular text-[11px] text-accent truncate'>
                     {project.category}
                   </span>
                 </span>
@@ -526,7 +527,7 @@ const ProjectsSection: React.FC = () => {
           viewport={{once: true, amount: 0.1}}
         >
           <motion.div
-            className='text-end flex items-start pt-3 pe-10 justify-end text-[#fff] font-bold oswald-regular pb-2'
+            className='flex justify-end pe-6 pb-2'
             variants={{
               hidden: {opacity: 0, x: 75},
               visible: {
@@ -536,7 +537,7 @@ const ProjectsSection: React.FC = () => {
               },
             }}
           >
-            <h1>{t('projects.title')}</h1>
+            <SectionHeading align='end'>{t('projects.title')}</SectionHeading>
           </motion.div>
 
           {featured.map((project, index) => (
@@ -575,7 +576,7 @@ const ProjectsSection: React.FC = () => {
       >
         <motion.div
           style={{gridArea: '1 / 3 / 3 / 6'}}
-          className='text-end flex items-start pt-3 pe-5 justify-end w-full h-full text-[#fff] font-bold oswald-regular select-none'
+          className='flex items-start justify-end pt-3 pe-5 w-full h-full'
           variants={{
             hidden: {opacity: 0, x: 75},
             visible: {
@@ -585,7 +586,7 @@ const ProjectsSection: React.FC = () => {
             },
           }}
         >
-          <h1>{t('projects.title')}</h1>
+          <SectionHeading align='end'>{t('projects.title')}</SectionHeading>
         </motion.div>
         {featured.map((project, index) => (
           <motion.div

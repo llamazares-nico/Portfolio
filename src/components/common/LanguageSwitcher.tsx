@@ -11,7 +11,7 @@ const LanguageSwitcher: React.FC = () => {
   return (
     <div
       onClick={toggleLanguage}
-      className='rounded-full w-8 h-8 bg-[#000]/10 lg:text-gray-400 border-2 border-[#222] text-[#222] lg:border-[#000]/15 lg:hover:text-[#fff] lg:hover:border-[#0fa] hover:border-[#000] hover:text-[#000] transition-colors duration-300 cursor-pointer overflow-hidden relative'
+      className='cut [--cut:7px] w-9 h-9 bg-[#000]/30 lg:text-gray-400 text-[#222] lg:hover:text-white lg:hover:bg-accent/15 hover:text-[#000] transition-colors duration-300 cursor-pointer overflow-hidden relative'
       style={{padding: 0}}
     >
       <div

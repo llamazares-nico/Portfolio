@@ -2,6 +2,7 @@ import React, {useState, useRef} from 'react'
 import emailjs from '@emailjs/browser'
 import {motion} from 'framer-motion'
 import {useLanguage} from '../../hooks/LanguageContext'
+import SectionHeading from '../common/SectionHeading'
 import {TextField} from '@mui/material'
 import toast from 'react-hot-toast'
 import {MapPin, Phone, Mail, Send, LoaderCircle} from 'lucide-react'
@@ -54,7 +55,7 @@ const ContactSection: React.FC = () => {
   return (
     <div
       id='contact'
-      className='h-[80vh] items-center justify-center flex mt-25 mx-6 lg:mx-0'
+      className='lg:min-h-[80vh] items-center justify-center flex mt-16 lg:mt-25 mb-10 lg:mb-0 mx-4 sm:mx-6 lg:mx-0'
     >
       <div className='h-fit w-full'>
         <div
@@ -64,7 +65,7 @@ const ContactSection: React.FC = () => {
           }}
         >
           <div
-            className='bg-[#0C0C0C] h-full w-full p-12 md:px-14 lg:p-16 lg:pt-14 flex flex-col gap-6 lg:gap-12'
+            className='bg-[#0C0C0C] h-full w-full px-6 py-10 sm:p-12 md:px-14 lg:p-16 lg:pt-14 flex flex-col gap-8 lg:gap-12'
             style={{
               clipPath: `polygon(0% 0%, var(--clip-right-top, 93%) 0%, 100% var(--clip-angle-top, 10%), 100% 100%, var(--clip-left-bottom, 7%) 100%, 0% var(--clip-angle-bottom, 90%))`,
             }}
@@ -76,44 +77,44 @@ const ContactSection: React.FC = () => {
               whileInView='visible'
               viewport={{once: true, amount: 0.3}}
             >
-              <motion.h1
-                className='uppercase font-bold oswald-regular'
+              <motion.div variants={fadeInUp}>
+                <SectionHeading align='center'>
+                  {t('contact.title')}
+                </SectionHeading>
+              </motion.div>
+
+              <motion.p
+                className='mt-5 max-w-[52ch] mx-auto text-[#c8c8c8]'
                 variants={fadeInUp}
               >
-                {t('contact.title')}
-              </motion.h1>
-
-              <motion.p className='mt-4' variants={fadeInUp}>
                 {t('contact.p2')}
               </motion.p>
-
-              <motion.div
-                className='w-16 bg-[#0fa]/75 h-0.5 mt-6 mx-auto rounded'
-                variants={fadeInUp}
-              />
             </motion.div>
             <motion.div
               variants={stagger}
               initial='hidden'
               whileInView='visible'
               viewport={{once: true, amount: 0.3}}
-              className='flex flex-row gap-8 h-fit lg:px-4'
+              className='flex flex-col lg:flex-row gap-8 h-fit lg:px-4'
             >
               <motion.div
                 variants={slideFromLeft}
-                className='grow-1 text-start max-w-3/8 -mt-4 flex-col gap-3 hidden lg:flex'
+                className='grow-1 text-start lg:max-w-3/8 lg:-mt-4 flex flex-col gap-3'
               >
-                <h3 className='uppercase oswald-regular' style={{fontSize: 30}}>
+                <h3
+                  className='uppercase oswald-regular hidden lg:block'
+                  style={{fontSize: 30}}
+                >
                   {t('contact.info.title')}
                 </h3>
-                <p className='font-light'>{t('contact.p1')}</p>
-                <div className='flex flex-col gap-4 py-3'>
+                <p className='font-light hidden lg:block'>{t('contact.p1')}</p>
+                <div className='flex flex-col gap-2 lg:gap-4 lg:py-3'>
                   <motion.div
                     variants={scaleFade}
-                    className='flex flex-row items-center gap-4'
+                    className='flex flex-row items-center gap-4 min-h-12 py-1'
                   >
-                    <div className='w-12 h-12 flex items-center justify-center bg-[#000]/25 border-1 border-neutral-900 text-[#0fa] rounded-lg'>
-                      <MapPin size={26} />
+                    <div className='cut [--cut:10px] w-12 h-12 shrink-0 flex items-center justify-center bg-[#000]/40 text-accent'>
+                      <MapPin size={24} />
                     </div>
                     <div className='flex flex-col gap-0'>
                       <p className='uppercase oswald-regular'>
@@ -124,45 +125,42 @@ const ContactSection: React.FC = () => {
                       </p>
                     </div>
                   </motion.div>
-                  <motion.div
+                  <motion.a
                     variants={scaleFade}
-                    className='flex flex-row items-center gap-4'
+                    href='mailto:llamazares.nico@gmail.com'
+                    className='group cut [--cut:12px] flex flex-row items-center gap-4 min-h-12 -mx-2 px-2 py-1 hover:bg-[#000]/30 focus-visible:bg-[#000]/30 outline-none transition-colors'
                   >
-                    <div className='w-12 h-12 flex items-center justify-center bg-[#000]/25 border-1 border-neutral-900 text-[#0fa] rounded-lg'>
-                      <Mail size={26} />
-                    </div>
-                    <div className='flex flex-col gap-0'>
-                      <p className='uppercase oswald-regular'>
+                    <span className='cut [--cut:10px] w-12 h-12 shrink-0 flex items-center justify-center bg-[#000]/40 group-hover:bg-accent/15 text-accent transition-colors'>
+                      <Mail size={24} />
+                    </span>
+                    <span className='flex flex-col gap-0 min-w-0'>
+                      <span className='uppercase oswald-regular'>
                         {t('contact.info.email')}
-                      </p>
-                      <a
-                        className='font-light'
-                        href='mailto:llamazares.nico@gmail.com'
-                      >
+                      </span>
+                      <span className='font-light break-words'>
                         {t('contact.info.email.p1')}
-                      </a>
-                    </div>
-                  </motion.div>
-                  <motion.div
+                      </span>
+                    </span>
+                  </motion.a>
+                  <motion.a
                     variants={scaleFade}
-                    className='flex flex-row items-center gap-4'
+                    href='https://wa.me/5492216325117'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='group cut [--cut:12px] flex flex-row items-center gap-4 min-h-12 -mx-2 px-2 py-1 hover:bg-[#000]/30 focus-visible:bg-[#000]/30 outline-none transition-colors'
                   >
-                    <div className='w-12 h-12 flex items-center justify-center bg-[#000]/25 border-1 border-neutral-900 text-[#0fa] rounded-lg'>
-                      <Phone size={26} />
-                    </div>
-                    <div className='flex flex-col gap-0'>
-                      <p className='uppercase oswald-regular'>
+                    <span className='cut [--cut:10px] w-12 h-12 shrink-0 flex items-center justify-center bg-[#000]/40 group-hover:bg-accent/15 text-accent transition-colors'>
+                      <Phone size={24} />
+                    </span>
+                    <span className='flex flex-col gap-0 min-w-0'>
+                      <span className='uppercase oswald-regular'>
                         {t('contact.info.phone')}
-                      </p>
-                      <a
-                        className='font-light'
-                        href='https://wa.me/5492216325117'
-                        target='_blank'
-                      >
+                      </span>
+                      <span className='font-light break-words'>
                         {t('contact.info.phone.p1')}
-                      </a>
-                    </div>
-                  </motion.div>
+                      </span>
+                    </span>
+                  </motion.a>
                 </div>
               </motion.div>
               <motion.form
@@ -181,7 +179,7 @@ const ContactSection: React.FC = () => {
                   {t('contact.message.title')}
                 </h3>
                 <div className='w-full flex flex-col gap-3 pt-3'>
-                  <div className='flex flex-row gap-3'>
+                  <div className='flex flex-col sm:flex-row gap-3'>
                     <TextField
                       id='standard-multiline-static'
                       label={t('contact.message.name')}
@@ -308,7 +306,7 @@ const ContactSection: React.FC = () => {
                   disabled={sending}
                 >
                   <div
-                    className='w-full h-auto object-cover bg-[#222] hover:bg-[#0fa] transition-colors object-center p-[1px]'
+                    className='w-full h-auto object-cover bg-[#222] hover:bg-accent transition-colors object-center p-[1px]'
                     style={{
                       clipPath:
                         'polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))',

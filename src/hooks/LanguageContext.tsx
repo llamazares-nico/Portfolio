@@ -38,7 +38,7 @@ const translations: Record<Language, Record<string, string>> = {
     'home.viewProjects': 'View projects',
 
     // About section
-    'about.title': '// About me',
+    'about.title': 'About me',
     'about.p1':
       "Since I was a child, I've been fascinated by technology as a tool for bringing ideas to life. My path led me to graduate as an <b>Electromechanical Technician</b>, but it was in the world of web development where I truly found my calling.",
     'about.p2':
@@ -49,7 +49,7 @@ const translations: Record<Language, Record<string, string>> = {
       'Recently graduated as a <b>University Programmer Analyst</b> from the National University of La Plata (UNLP), I am actively seeking opportunities to grow as a developer, contribute my knowledge and take on new challenges. I am convinced that my constant curiosity and dedication can be a valuable asset to any team.',
 
     // Projects section
-    'projects.title': 'PROJECTS >>',
+    'projects.title': 'Projects',
     'projects.desktopDevelopment': 'DESKTOP DEVELOPMENT',
     'projects.webDevelopment': 'WEB DEVELOPMENT',
     'projects.gameDevelopment': 'GAME DEVELOPMENT',
@@ -346,7 +346,7 @@ const translations: Record<Language, Record<string, string>> = {
     'home.viewProjects': 'Ver proyectos',
 
     // About section
-    'about.title': '// Sobre mí',
+    'about.title': 'Sobre mí',
     'about.p1':
       'Desde niño, me ha fascinado la tecnología como herramienta para dar vida a ideas. Mi camino me llevó a graduarme como <b>Técnico Electromecánico</b>, pero fue en el mundo del desarrollo web donde realmente encontré mi vocación.',
     'about.p2':
@@ -357,7 +357,7 @@ const translations: Record<Language, Record<string, string>> = {
       'Recientemente recibido como <b>Analista Programador Universitario</b> en la Universidad Nacional de La Plata (UNLP), estoy buscando activamente oportunidades para crecer como desarrollador, aportar mis conocimientos y asumir nuevos desafíos. Estoy convencido de que mi constante curiosidad y dedicación pueden ser un activo valioso para cualquier equipo.',
 
     // Projects section
-    'projects.title': 'PROYECTOS >>',
+    'projects.title': 'Proyectos',
     'projects.desktopDevelopment': 'APLICACIÓN DE ESCRITORIO',
     'projects.webDevelopment': 'APLICACIÓN WEB',
     'projects.gameDevelopment': 'JUEGO',

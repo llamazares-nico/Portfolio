@@ -51,7 +51,7 @@ const Modal = ({children, onClose}: ModalProps) => {
         {children}
       </div>
       <motion.div
-        className={`cursor-pointer select-none flex items-center justify-center font-bold text-2xl absolute w-12 h-12 top-3 right-3 text-white hover:text-[#0fa] transition-colors ${
+        className={`cursor-pointer select-none flex items-center justify-center font-bold text-2xl absolute w-12 h-12 top-3 right-3 text-white hover:text-accent transition-colors ${
           isOpen ? 'opacity-100' : 'opacity-0'
         }`}
         onClick={onClose}

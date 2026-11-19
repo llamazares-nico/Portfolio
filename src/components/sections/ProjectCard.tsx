@@ -95,7 +95,7 @@ const LinkButtons: React.FC<{links: ProjectCardLink[]}> = ({links}) => (
         aria-label={link.label}
         title={link.label}
         onClick={(e) => e.stopPropagation()}
-        className='group/link block p-[2px] bg-[#070707] hover:bg-[#0fa] focus-visible:bg-[#0fa] outline-none transition-colors'
+        className='group/link block p-[2px] bg-[#070707] hover:bg-accent focus-visible:bg-accent outline-none transition-colors'
         style={{clipPath: CUT_SMALL}}
       >
         <span
@@ -112,7 +112,7 @@ const LinkButtons: React.FC<{links: ProjectCardLink[]}> = ({links}) => (
 const ViewProject: React.FC<{label: string}> = ({label}) => (
   <button
     type='button'
-    className='oswald-regular uppercase tracking-[2px] text-sm text-[#0fa] flex items-center gap-2 cursor-pointer outline-none focus-visible:underline underline-offset-4'
+    className='oswald-regular uppercase tracking-[2px] text-sm text-accent flex items-center gap-2 cursor-pointer outline-none focus-visible:underline underline-offset-4'
   >
     {label}
     <ArrowRight
@@ -153,7 +153,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           <h3 className='oswald-regular text-2xl uppercase leading-tight'>
             {title}
           </h3>
-          <p className='oswald-regular text-[#0fa] text-xs tracking-wide'>
+          <p className='oswald-regular text-accent text-xs tracking-wide'>
             {category}
           </p>
         </div>
@@ -169,14 +169,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   }
 
   return (
-    <div className='group relative h-full flex flex-col bg-[#000]/25 border-2 border-[#000]/35 hover:ring-2 has-[:focus-visible]:ring-2 ring-[#0fa] transition-all duration-400 text-start py-6 select-none cursor-pointer'>
+    <div className='group relative h-full flex flex-col bg-[#000]/25 border-2 border-[#000]/35 hover:ring-2 has-[:focus-visible]:ring-2 ring-accent transition-all duration-400 text-start py-6 select-none cursor-pointer'>
       <div className='px-7 flex flex-col grow'>
         <div className='flex flex-row w-full justify-between items-center'>
           <div className='flex flex-col oswald-regular'>
             <span className='text-2xl'>{number}</span>
-            <span className='text-[#0fa] text-xs font-[500]'>{category}</span>
+            <span className='text-accent text-xs font-[500]'>{category}</span>
           </div>
-          <div className='border-3 border-[#121212] rounded-xl w-12 h-12 flex justify-center items-center text-[#ccc]'>
+          <div className='cut [--cut:10px] bg-[#121212] w-12 h-12 flex justify-center items-center text-[#ccc]'>
             {icon}
           </div>
         </div>

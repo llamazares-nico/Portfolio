@@ -27,7 +27,7 @@ const HeroSection: React.FC = () => {
   return (
     <section
       id='home'
-      className='min-h-[100svh] flex items-start md:items-center justify-center text-start px-6 md:px-12 pt-36 md:pt-32 pb-16'
+      className='md:min-h-[100svh] flex items-start md:items-center justify-center text-start px-6 md:px-12 pt-36 md:pt-32 pb-8 md:pb-16'
     >
       <div className='w-full max-w-[1040px] grid grid-cols-1 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-7 md:gap-16 items-center'>
         {/* Avatar: arriba en celular, a la derecha en escritorio */}
@@ -63,7 +63,7 @@ const HeroSection: React.FC = () => {
 
           <motion.div
             aria-hidden='true'
-            className='h-1 w-18 bg-[#0fa] origin-left'
+            className='h-1 w-18 bg-accent origin-left'
             style={{
               clipPath: 'polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%)',
             }}
@@ -83,7 +83,7 @@ const HeroSection: React.FC = () => {
             <button
               type='button'
               onClick={scrollToProjects}
-              className='group h-11 inline-flex items-center gap-2.5 ps-6 pe-[18px] bg-white text-black shadow-[inset_6px_0_0_#0d9] hover:shadow-[inset_6px_0_0_#0fa] focus-visible:shadow-[inset_6px_0_0_#0fa] outline-none transition-shadow uppercase text-[13px] tracking-[1.5px] oswald-regular cursor-pointer [--c:9px]'
+              className='group h-11 inline-flex items-center gap-2.5 ps-6 pe-[18px] bg-white text-black shadow-[inset_6px_0_0_var(--color-accent)] hover:shadow-[inset_6px_0_0_var(--color-accent)] focus-visible:shadow-[inset_6px_0_0_var(--color-accent)] outline-none transition-shadow uppercase text-[13px] tracking-[1.5px] oswald-regular cursor-pointer [--c:9px]'
               style={{clipPath: CUT}}
             >
               <ArrowDown
@@ -95,7 +95,7 @@ const HeroSection: React.FC = () => {
             <button
               type='button'
               onClick={() => downloadCV(language)}
-              className='group h-11 p-px bg-[#2a2a2a] hover:bg-[#0fa] focus-visible:bg-[#0fa] outline-none transition-colors cursor-pointer [--c:9px]'
+              className='group h-11 p-px bg-[#2a2a2a] hover:bg-accent focus-visible:bg-accent outline-none transition-colors cursor-pointer [--c:9px]'
               style={{clipPath: CUT}}
             >
               <span
@@ -111,7 +111,7 @@ const HeroSection: React.FC = () => {
           <motion.p className='m-0 text-[14px] text-[#9a9a9a]' {...rise(0.35)}>
             {t('home.university')} ·{' '}
             <a
-              className='text-[#c8c8c8] underline decoration-[#0fa]/50 underline-offset-4 hover:decoration-[#0fa] transition-colors'
+              className='text-[#c8c8c8] underline decoration-accent/50 underline-offset-4 hover:decoration-accent transition-colors'
               target='_blank'
               rel='noopener noreferrer'
               href='https://unlp.edu.ar/'

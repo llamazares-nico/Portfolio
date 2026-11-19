@@ -1,6 +1,7 @@
 import React from 'react'
 import {motion} from 'framer-motion'
 import {useLanguage} from '../../hooks/LanguageContext'
+import SectionHeading from '../common/SectionHeading'
 
 const AboutSection: React.FC = () => {
   const {t} = useLanguage()
@@ -42,46 +43,17 @@ const AboutSection: React.FC = () => {
             },
           }}
         >
-          <motion.h1
-            className='uppercase font-white oswald-regular text-xl text-start text-white'
+          <motion.div
             variants={{
               hidden: {opacity: 0, x: -30},
               visible: {
                 opacity: 1,
                 x: 0,
-                transition: {
-                  duration: 0.5,
-                  ease: 'easeOut',
-                },
+                transition: {duration: 0.5, ease: 'easeOut'},
               },
             }}
           >
-            {t('about.title')}
-          </motion.h1>
-          <motion.div
-            variants={{
-              hidden: {opacity: 0, x: 30},
-              visible: {
-                opacity: 1,
-                x: 0,
-                transition: {
-                  duration: 0.5,
-                  ease: 'easeOut',
-                },
-              },
-            }}
-            className='hidden md:block'
-          >
-            <div className='flex flex-row h-16 items-center'>
-              <div className='anton-regular relative h-min text-neutral-900 bg-white rounded leading-none text-center m-0 p-2 font-bold text-3xl z-5'>
-                NL
-              </div>
-              <div className='relative flex items-center ps-4 text-start uppercase h-full text-white font-bold leading-4 text-[10px] tracking-[4px]'>
-                Nicolas
-                <br />
-                Llamazares
-              </div>
-            </div>
+            <SectionHeading>{t('about.title')}</SectionHeading>
           </motion.div>
         </motion.div>
         <motion.div
@@ -95,7 +67,7 @@ const AboutSection: React.FC = () => {
               },
             },
           }}
-          className='md:border-l-4 border-[#0fa]/50 md:pl-6'
+          className='max-w-[72ch]'
         >
           <motion.p
             className='text-start text-[18px] leading-[1.75]'

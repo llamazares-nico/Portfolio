@@ -111,13 +111,13 @@ function Header(): React.ReactElement {
                   <li
                     className={`h-full flex items-center hover:bg-neutral-900 transition-all cursor-pointer ${
                       activeSection === 'about'
-                        ? 'border-b-2 border-[#0fa]'
+                        ? 'border-b-2 border-accent'
                         : ''
                     }`}
                   >
                     <div
                       className={`flex items-center px-8 h-full whitespace-nowrap ${
-                        activeSection === 'about' ? 'text-[#0fa]' : ''
+                        activeSection === 'about' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'about')}
                     >
@@ -127,13 +127,13 @@ function Header(): React.ReactElement {
                   <li
                     className={`h-full flex items-center hover:bg-neutral-900 transition-all cursor-pointer ${
                       activeSection === 'projects'
-                        ? 'border-b-2 border-[#0fa]'
+                        ? 'border-b-2 border-accent'
                         : ''
                     }`}
                   >
                     <div
                       className={`flex items-center px-8 h-full whitespace-nowrap ${
-                        activeSection === 'projects' ? 'text-[#0fa]' : ''
+                        activeSection === 'projects' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'projects')}
                     >
@@ -143,13 +143,13 @@ function Header(): React.ReactElement {
                   <li
                     className={`h-full flex items-center hover:bg-neutral-900 transition-all cursor-pointer ${
                       activeSection === 'contact'
-                        ? 'border-b-2 border-[#0fa]'
+                        ? 'border-b-2 border-accent'
                         : ''
                     }`}
                   >
                     <div
                       className={`flex items-center px-8 h-full whitespace-nowrap ${
-                        activeSection === 'contact' ? 'text-[#0fa]' : ''
+                        activeSection === 'contact' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'contact')}
                     >
@@ -165,7 +165,7 @@ function Header(): React.ReactElement {
                 <a
                   href='https://github.com/Webyven/'
                   target='_blank'
-                  className='rounded-full p-2 bg-[#000]/10 text-gray-400 border-2 border-[#000]/15 hover:text-[#fff] hover:border-[#0fa] transition-all duration-300 hover:scale-110'
+                  className='cut [--cut:7px] p-2.5 bg-[#000]/30 text-gray-400 hover:text-white hover:bg-accent/15 focus-visible:text-white focus-visible:bg-accent/15 outline-none transition-colors duration-300'
                   rel='noopener noreferrer'
                   aria-label='GitHub'
                 >
@@ -174,7 +174,7 @@ function Header(): React.ReactElement {
                 <a
                   href='https://www.linkedin.com/in/llamazares-nicolas/'
                   target='_blank'
-                  className='rounded-full p-2 bg-[#000]/10 text-gray-400 border-2 border-[#000]/15 hover:text-[#fff] hover:border-[#0fa] transition-all duration-300 hover:scale-110'
+                  className='cut [--cut:7px] p-2.5 bg-[#000]/30 text-gray-400 hover:text-white hover:bg-accent/15 focus-visible:text-white focus-visible:bg-accent/15 outline-none transition-colors duration-300'
                   rel='noopener noreferrer'
                   aria-label='LinkedIn'
                 >
@@ -183,7 +183,7 @@ function Header(): React.ReactElement {
                 <a
                   href='mailto:llamazares.nico@gmail.com'
                   target='_blank'
-                  className='rounded-full p-2 bg-[#000]/10 text-gray-400 border-2 border-[#000]/15 hover:text-[#fff] hover:border-[#0fa] transition-all duration-300 hover:scale-110'
+                  className='cut [--cut:7px] p-2.5 bg-[#000]/30 text-gray-400 hover:text-white hover:bg-accent/15 focus-visible:text-white focus-visible:bg-accent/15 outline-none transition-colors duration-300'
                   rel='noopener noreferrer'
                   aria-label='Email'
                 >

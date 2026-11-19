@@ -1,6 +1,7 @@
 import React from 'react'
 import {motion} from 'framer-motion'
 import {useLanguage} from '../../hooks/LanguageContext'
+import {scrollToSection} from '../../utils/scrollToSection'
 import {ChevronsUp} from 'lucide-react'
 import {fadeInUp} from '../../animations/variants'
 
@@ -12,13 +13,7 @@ function Footer(): React.ReactElement {
     targetId: string
   ) => {
     e.preventDefault()
-    const targetElement = document.getElementById(targetId)
-    if (targetElement) {
-      window.scrollTo({
-        top: targetElement.offsetTop - 100,
-        behavior: 'smooth',
-      })
-    }
+    scrollToSection(targetId)
   }
 
   return (

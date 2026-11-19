@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Github, Linkedin, Mail} from 'lucide-react'
 import LanguageSwitcher from '../common/LanguageSwitcher'
 import {useLanguage} from '../../hooks/LanguageContext'
+import {scrollToSection} from '../../utils/scrollToSection'
 import {useWindowSize} from 'react-use'
 import {motion, AnimatePresence} from 'framer-motion'
 
@@ -38,13 +39,7 @@ function Header(): React.ReactElement {
     targetId: string
   ) => {
     e.preventDefault()
-    const targetElement = document.getElementById(targetId)
-    if (targetElement) {
-      window.scrollTo({
-        top: targetElement.offsetTop - 100,
-        behavior: 'smooth',
-      })
-    }
+    scrollToSection(targetId)
   }
 
   const handleScrollToId = (id: string) => {
@@ -54,11 +49,7 @@ function Header(): React.ReactElement {
     // Esperamos a que el DOM se repinte (dos frames)
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        const el = document.getElementById(id)
-        if (el) {
-          const y = el.getBoundingClientRect().top + window.scrollY - 25
-          window.scrollTo({top: y, behavior: 'smooth'})
-        }
+        scrollToSection(id)
       })
     })
   }

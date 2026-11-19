@@ -4,6 +4,7 @@ import {ArrowDown, Download} from 'lucide-react'
 import {downloadCV} from '../../utils/downloadCV'
 import {motion} from 'framer-motion'
 import {useLanguage} from '../../hooks/LanguageContext'
+import {scrollToSection} from '../../utils/scrollToSection'
 
 // Ease-out exponencial: arranca rápido y frena suave
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -21,8 +22,7 @@ const rise = (delay: number) => ({
 const HeroSection: React.FC = () => {
   const {t, language} = useLanguage()
 
-  const scrollToProjects = () =>
-    document.getElementById('projects')?.scrollIntoView({behavior: 'smooth'})
+  const scrollToProjects = () => scrollToSection('projects')
 
   return (
     <section

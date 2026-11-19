@@ -74,14 +74,16 @@ function Header(): React.ReactElement {
       >
         <div
           style={{
-            width: isScrolled ? '100%' : '80%',
+            width: isScrolled ? '100%' : 'calc(100% - 48px)',
             maxWidth: isScrolled ? '100vw' : '1200px',
             transition: 'all 300ms ease-in-out',
           }}
           className='mx-auto'
         >
           <nav
-            className={`transition-all duration-500 ease-in-out h-22 flex flex-row items-center justify-between overflow-hidden ring-3 ring-[#000]/25 uppercase min-w-[320px] ${'rounded-none'}`}
+            className={`transition-all duration-500 ease-in-out h-22 flex flex-row items-center justify-between overflow-hidden ring-3 ring-[#000]/25 uppercase min-w-[320px] ${
+              isScrolled ? '' : 'cut [--cut:18px] bg-[#1a1a1a]'
+            }`}
           >
             <div className='flex flex-row items-center justify-center overflow-hidden h-22 min-w-[200px] flex-shrink-0'>
               <a
@@ -125,7 +127,7 @@ function Header(): React.ReactElement {
                       aria-current={
                         activeSection === 'about' ? 'true' : undefined
                       }
-                      className={`flex items-center px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
+                      className={`flex items-center px-5 xl:px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
                         activeSection === 'about' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'about')}
@@ -145,7 +147,7 @@ function Header(): React.ReactElement {
                       aria-current={
                         activeSection === 'projects' ? 'true' : undefined
                       }
-                      className={`flex items-center px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
+                      className={`flex items-center px-5 xl:px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
                         activeSection === 'projects' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'projects')}
@@ -165,7 +167,7 @@ function Header(): React.ReactElement {
                       aria-current={
                         activeSection === 'contact' ? 'true' : undefined
                       }
-                      className={`flex items-center px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
+                      className={`flex items-center px-5 xl:px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
                         activeSection === 'contact' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'contact')}

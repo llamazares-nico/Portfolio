@@ -27,19 +27,15 @@ function Footer(): React.ReactElement {
       initial='hidden'
       whileInView='visible'
       viewport={{once: true, amount: 0.3}}
-      className='w-full -mt-28 pt-1 h-28 bg-[#000]/60 overflow-hidden'
+      className='w-full md:-mt-28 pt-1 h-24 md:h-28 bg-[#000]/60 overflow-hidden md:[clip-path:polygon(0%_0%,275px_0,375px_62%,100%_62%,100%_100%,0%_100%)]'
       style={{
-        clipPath:
-          'polygon(0% 0%, 275px 0, 375px 62%, 100% 62%, 100% 100%, 100% 100%, 0% 100%, 0% 100%)',
         color: '#fff',
         textAlign: 'center',
       }}
     >
       <div
-        className='w-full h-full relative flex flex-row bg-[#111]/60'
+        className='w-full h-full relative flex flex-row bg-[#111]/60 md:[clip-path:polygon(0%_0%,275px_0,375px_calc(62%_+_2px),100%_calc(62%_+_2px),100%_100%,0%_100%)]'
         style={{
-          clipPath:
-            'polygon(0% 0%, 275px 0, 375px calc(62% + 2px), 100% calc(62% + 2px), 100% 100%, 100% 100%, 0% 100%, 0% 100%)',
           color: '#fff',
           textAlign: 'center',
         }}
@@ -57,7 +53,7 @@ function Footer(): React.ReactElement {
             },
           }}
         >
-          <div className='flex flex-row h-16 items-center px-6 md:px-16 pt-11'>
+          <div className='flex flex-row h-full md:h-16 items-center px-6 md:px-16 md:pt-11'>
             <div className='anton-regular relative h-min text-neutral-900 bg-white rounded leading-none text-center m-0 p-2 font-bold text-4xl z-5'>
               NL
             </div>
@@ -69,7 +65,7 @@ function Footer(): React.ReactElement {
           </div>
         </motion.div>
         <p
-          className='absolute inset-x-0 bottom-2.5 text-center font-bold text-[#777] text-sm hidden md:block'
+          className='absolute inset-x-0 top-[62%] bottom-0 items-center justify-center font-bold text-[#777] text-sm hidden md:flex m-0'
           style={{fontWeight: 200}}
         >
           {t('footer.message')}
@@ -77,7 +73,7 @@ function Footer(): React.ReactElement {
         <button
           type='button'
           onClick={(e) => handleSmoothScroll(e, 'home')}
-          className='group cursor-pointer text-[#999] absolute -end-5 flex bottom-0 top-0 text-md leading-none m-0 p-3 pe-7 ps-4.5 pb-3.5 z-5 border-l-4 border-[#070707] items-end hover:bg-[#000]/25 hover:text-white focus-visible:bg-[#000]/25 focus-visible:text-white outline-none transition duration-300 ease-in-out'
+          className='group cursor-pointer text-[#999] absolute -end-5 flex bottom-0 top-0 md:top-[62%] text-md leading-none m-0 px-3 pe-7 ps-4.5 z-5 border-l-4 border-[#070707] items-center hover:bg-[#000]/25 hover:text-white focus-visible:bg-[#000]/25 focus-visible:text-white outline-none transition duration-300 ease-in-out'
           style={{
             transform: 'skew(-15deg)',
           }}

@@ -27,7 +27,7 @@ const AboutSection: React.FC = () => {
       id='about'
       className='min-h-[75vh] w-full flex flex-col items-center justify-center pt-25 pb-15'
     >
-      <div className='bg-[#0a0a0a] absolute m-0 p-0 h-[2px] w-[99.2vw] left-0 -z-10 flex flex-col align-center justify-between'></div>
+      <div className='bg-[#0a0a0a] absolute m-0 p-0 h-[2px] left-0 right-0 -z-10 flex flex-col align-center justify-between'></div>
       <motion.div
         variants={{
           hidden: {y: 50},

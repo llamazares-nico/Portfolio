@@ -13,6 +13,10 @@ import {
   scaleFade,
 } from '../../animations/variants'
 
+// Corte diagonal de la caja en píxeles: el tamaño no depende del alto de la caja
+const BOX_CUT =
+  'polygon(0 0, calc(100% - var(--box-cut)) 0, 100% var(--box-cut), 100% 100%, var(--box-cut) 100%, 0 calc(100% - var(--box-cut)))'
+
 const FIELD_CLASS =
   'w-full bg-[#000]/40 text-white text-[16px] px-4 py-3 border-0 border-b-2 border-[#262626] outline-none transition-colors hover:border-[#3a3a3a] focus:border-accent placeholder:text-[#666]'
 
@@ -115,15 +119,15 @@ const ContactSection: React.FC = () => {
     >
       <div className='h-fit w-full'>
         <div
-          className='bg-[#000]/60 w-full h-full p-1'
+          className='bg-[#000]/60 w-full h-full p-1 [--box-cut:28px] lg:[--box-cut:80px]'
           style={{
-            clipPath: `polygon(0% 0%, var(--clip-right-top, 93%) 0%, 100% var(--clip-angle-top, 10%), 100% 100%, var(--clip-left-bottom, 7%) 100%, 0% var(--clip-angle-bottom, 90%))`,
+            clipPath: BOX_CUT,
           }}
         >
           <div
             className='bg-[#0C0C0C] h-full w-full px-6 py-10 sm:p-12 md:px-14 lg:p-16 lg:pt-14 flex flex-col gap-8 lg:gap-12'
             style={{
-              clipPath: `polygon(0% 0%, var(--clip-right-top, 93%) 0%, 100% var(--clip-angle-top, 10%), 100% 100%, var(--clip-left-bottom, 7%) 100%, 0% var(--clip-angle-bottom, 90%))`,
+              clipPath: BOX_CUT,
             }}
           >
             <motion.div

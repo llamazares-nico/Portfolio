@@ -42,7 +42,7 @@ const Cover: React.FC<{
   <div className='relative'>
     <div className='bg-[#070707] p-1.5' style={{clipPath: CUT_OUTER}}>
       <div
-        className={`${aspect} overflow-hidden bg-[#0a0a0a]`}
+        className={`${aspect} overflow-hidden bg-[#0a0a0a] isolate [transform:translateZ(0)]`}
         style={{clipPath: CUT_INNER}}
       >
         {cover ? (
@@ -50,7 +50,7 @@ const Cover: React.FC<{
             src={cover}
             alt={typeof title === 'string' ? `${title} - Captura` : ''}
             loading='lazy'
-            className='w-full h-full object-cover object-left-top transition-transform duration-500 ease-out group-hover:scale-[1.04]'
+            className='w-full h-full object-cover object-left-top will-change-transform transition-transform duration-500 ease-out group-hover:scale-[1.04]'
           />
         ) : (
           <img

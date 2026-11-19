@@ -29,9 +29,13 @@ const translations: Record<Language, Record<string, string>> = {
     'home.role': 'Software Developer',
     'home.university': 'University Programmer Analyst',
     'home.university.from': 'from the National University of La Plata',
+    'home.university.short': 'National University of La Plata (UNLP)',
     'home.university.remaining':
       '2 remaining subjects to complete - 92% completed',
     'home.resume': 'My Resume',
+    'home.tagline':
+      'Full-stack developer. I build web and desktop apps with React, Next.js and .NET.',
+    'home.viewProjects': 'View projects',
 
     // About section
     'about.title': '// About me',
@@ -334,8 +338,12 @@ const translations: Record<Language, Record<string, string>> = {
     'home.role': 'Desarrollador de Software',
     'home.university': 'Analista Programador Universitario',
     'home.university.from': 'de la Universidad Nacional de La Plata',
+    'home.university.short': 'Universidad Nacional de La Plata (UNLP)',
     'home.university.remaining': '2 materias restantes - 92% completado',
     'home.resume': 'Currículum',
+    'home.tagline':
+      'Desarrollador full-stack. Hago aplicaciones web y de escritorio con React, Next.js y .NET.',
+    'home.viewProjects': 'Ver proyectos',
 
     // About section
     'about.title': '// Sobre mí',

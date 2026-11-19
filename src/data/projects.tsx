@@ -33,6 +33,8 @@ export interface Project {
   gallery?: GalleryImage[]
   /** Captura de portada de la tarjeta; si falta, se usa la primera de la galería */
   cover?: string
+  /** Encuadre de la portada (object-position de CSS). Por defecto 'left top' */
+  coverPosition?: string
 }
 
 export const projectsData: Project[] = [
@@ -269,6 +271,7 @@ export const projectsData: Project[] = [
     imageAlt: 'CEDICA - Logo',
     imgStyle: {padding: 5, paddingLeft: 6, paddingRight: 4},
     titleKey: 'projects.cedica',
+    coverPosition: 'center top',
     descriptionKey: 'projects.cedica.description',
     longDescriptionKey: 'projects.cedica.longDescription',
     technologies: [

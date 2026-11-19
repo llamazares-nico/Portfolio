@@ -19,6 +19,8 @@ interface ProjectCardProps {
   imgStyle?: React.CSSProperties
   /** Captura del proyecto: es la imagen principal de la tarjeta */
   cover?: string
+  /** Encuadre de la captura; por defecto arriba a la izquierda */
+  coverPosition?: string
   title: React.ReactNode
   description: React.ReactNode
   links?: ProjectCardLink[]
@@ -35,12 +37,21 @@ const CUT_SMALL =
 /** Captura recortada con el logo del proyecto como sello en la esquina */
 const Cover: React.FC<{
   cover?: string
+  coverPosition?: string
   image: string
   imageAlt: string
   imgStyle?: React.CSSProperties
   title: React.ReactNode
   aspect: string
-}> = ({cover, image, imageAlt, imgStyle, title, aspect}) => (
+}> = ({
+  cover,
+  coverPosition = 'left top',
+  image,
+  imageAlt,
+  imgStyle,
+  title,
+  aspect,
+}) => (
   <div className='relative'>
     <div className='bg-[#070707] p-1.5' style={{clipPath: CUT_OUTER}}>
       <div
@@ -52,7 +63,8 @@ const Cover: React.FC<{
             src={cover}
             alt={typeof title === 'string' ? `${title} - Captura` : ''}
             loading='lazy'
-            className='w-full h-full object-cover object-left-top will-change-transform transition-transform duration-500 ease-out group-hover:scale-[1.04]'
+            style={{objectPosition: coverPosition}}
+            className='w-full h-full object-cover will-change-transform transition-transform duration-500 ease-out group-hover:scale-[1.04]'
           />
         ) : (
           <img
@@ -131,6 +143,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   image,
   imageAlt,
   cover,
+  coverPosition,
   title,
   description,
   links = [],
@@ -146,6 +159,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className='group mx-6 bg-[#000]/25 border-2 border-[#000]/35 text-start p-4 cursor-pointer'>
         <Cover
           cover={cover}
+          coverPosition={coverPosition}
           image={image}
           imageAlt={imageAlt}
           imgStyle={imgStyle}
@@ -186,6 +200,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <div className='mt-6'>
           <Cover
             cover={cover}
+            coverPosition={coverPosition}
             image={image}
             imageAlt={imageAlt}
             imgStyle={imgStyle}

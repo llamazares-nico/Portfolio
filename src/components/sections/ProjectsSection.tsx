@@ -28,6 +28,7 @@ interface Project {
   imgStyle?: React.CSSProperties
   gallery?: GalleryImage[]
   cover?: string
+  coverPosition?: string
 }
 
 const preloadImage = (src: string) => {
@@ -431,6 +432,7 @@ const ProjectsSection: React.FC = () => {
       image={project.image}
       imageAlt={project.imageAlt}
       cover={project.cover}
+      coverPosition={project.coverPosition}
       title={project.title}
       description={project.description}
       links={project.links}
@@ -564,7 +566,7 @@ const ProjectsSection: React.FC = () => {
   ]
 
   return (
-    <section id='projects' className='pt-25 pb-15'>
+    <section id='projects' className='pt-16 pb-15'>
       <motion.div
         className='min-h-[640px] grid grid-cols-4 grid-rows-9 gap-x-5 px-2 -me-5'
         variants={stagger}

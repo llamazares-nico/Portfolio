@@ -2,6 +2,22 @@ import React from 'react'
 import {motion} from 'framer-motion'
 import {useLanguage} from '../../hooks/LanguageContext'
 import SectionHeading from '../common/SectionHeading'
+import {richText} from '../../utils/richText'
+
+const STACK = [
+  {
+    key: 'about.stack.frontend',
+    items: ['React', 'Next.js', 'TypeScript', 'Tailwind', 'Framer Motion'],
+  },
+  {
+    key: 'about.stack.backend',
+    items: ['C#', '.NET', 'ASP.NET Core', 'Entity Framework', 'Node.js'],
+  },
+  {
+    key: 'about.stack.data',
+    items: ['PostgreSQL', 'Oracle', 'Supabase', 'Docker', 'Vercel', 'Render'],
+  },
+]
 
 const AboutSection: React.FC = () => {
   const {t} = useLanguage()
@@ -56,44 +72,60 @@ const AboutSection: React.FC = () => {
             <SectionHeading>{t('about.title')}</SectionHeading>
           </motion.div>
         </motion.div>
-        <motion.div
-          variants={{
-            hidden: {opacity: 0},
-            visible: {
-              opacity: 1,
-              transition: {
-                duration: 0.5,
-                delay: 0.3,
-              },
-            },
-          }}
-          className='max-w-[72ch]'
-        >
-          <motion.p
-            className='text-start text-[18px] leading-[1.75]'
+        <div className='grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] gap-10 lg:gap-16 items-start'>
+          <motion.div
+            className='flex flex-col gap-5 max-w-[68ch]'
             variants={{
               hidden: {opacity: 0, y: 20},
               visible: {
                 opacity: 1,
                 y: 0,
-                transition: {
-                  duration: 0.7,
-                  ease: 'easeOut',
-                },
+                transition: {duration: 0.7, ease: 'easeOut', delay: 0.2},
               },
             }}
-            dangerouslySetInnerHTML={{
-              __html:
-                t('about.p1') +
-                '<div class="my-4"></div>' +
-                t('about.p2') +
-                '<div class="my-4"></div>' +
-                t('about.p3') +
-                '<div class="my-4"></div>' +
-                t('about.p4'),
+          >
+            {['about.p1', 'about.p2', 'about.p3'].map((key) => (
+              <p
+                key={key}
+                className='m-0 text-start text-[17px] md:text-[18px] leading-[1.7] text-[#c8c8c8]'
+              >
+                {richText(t(key))}
+              </p>
+            ))}
+          </motion.div>
+
+          {/* Stack agrupado: se lee en 5 segundos */}
+          <motion.aside
+            aria-label={t('about.stack.title')}
+            className='flex flex-col gap-6 text-start'
+            variants={{
+              hidden: {opacity: 0, x: 20},
+              visible: {
+                opacity: 1,
+                x: 0,
+                transition: {duration: 0.7, ease: 'easeOut', delay: 0.35},
+              },
             }}
-          ></motion.p>
-        </motion.div>
+          >
+            {STACK.map((group) => (
+              <div key={group.key} className='flex flex-col gap-2.5'>
+                <h3 className='m-0 oswald-regular uppercase text-[13px] tracking-[2px] text-accent'>
+                  {t(group.key)}
+                </h3>
+                <ul className='m-0 p-0 list-none flex flex-wrap gap-2'>
+                  {group.items.map((item) => (
+                    <li
+                      key={item}
+                      className='cut [--cut:6px] bg-[#000]/40 px-3 py-1 text-[14px] text-[#d4d4d4]'
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </motion.aside>
+        </div>
       </motion.div>
     </div>
   )

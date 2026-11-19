@@ -22,6 +22,8 @@ interface ProjectCardProps {
   title: React.ReactNode
   description: React.ReactNode
   links?: ProjectCardLink[]
+  /** Tecnologías destacadas; solo se muestran en la tarjeta de escritorio */
+  highlights?: string[]
 }
 
 const CUT_OUTER = 'polygon(0 0, 92% 0, 100% 12%, 100% 100%, 8% 100%, 0 88%)'
@@ -133,6 +135,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   description,
   links = [],
   imgStyle = {},
+  highlights = [],
 }) => {
   const {width} = useWindowSize()
   const {t} = useLanguage()
@@ -198,6 +201,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         <p className='mt-2 text-[15px] leading-6 text-[#c8c8c8]'>
           {description}
         </p>
+        {highlights.length > 0 && (
+          <ul className='m-0 mt-4 p-0 list-none flex flex-wrap gap-1.5'>
+            {highlights.map((tech) => (
+              <li
+                key={tech}
+                className='cut [--cut:5px] bg-[#000]/40 px-2.5 py-0.5 text-[13px] text-[#c8c8c8]'
+              >
+                {tech}
+              </li>
+            ))}
+          </ul>
+        )}
         <div className='mt-auto pt-5'>
           <ViewProject label={t('projects.viewProject')} />
         </div>

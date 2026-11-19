@@ -108,17 +108,31 @@ const HeroSection: React.FC = () => {
             </button>
           </motion.div>
 
-          <motion.p className='m-0 text-[14px] text-[#9a9a9a]' {...rise(0.35)}>
-            {t('home.university')} ·{' '}
-            <a
-              className='text-[#c8c8c8] underline decoration-accent/50 underline-offset-4 hover:decoration-accent transition-colors'
-              target='_blank'
-              rel='noopener noreferrer'
-              href='https://unlp.edu.ar/'
-            >
-              {t('home.university.short')}
-            </a>
-          </motion.p>
+          <motion.div
+            className='flex flex-col gap-1 text-[14px] text-[#9a9a9a]'
+            {...rise(0.35)}
+          >
+            {/* En celular, versiones cortas: una línea cada dato */}
+            <p className='m-0 md:hidden text-[#c8c8c8]'>
+              {t('home.job.short')}
+            </p>
+            <p className='m-0 md:hidden'>{t('home.university.compact')}</p>
+            <p className='m-0 hidden md:block'>
+              {t('home.job')}{' '}
+              <span className='text-[#c8c8c8]'>{t('home.job.place')}</span>
+            </p>
+            <p className='m-0 hidden md:block'>
+              {t('home.university')} ·{' '}
+              <a
+                className='text-[#c8c8c8] underline decoration-accent/50 underline-offset-4 hover:decoration-accent transition-colors'
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://unlp.edu.ar/'
+              >
+                {t('home.university.short')}
+              </a>
+            </p>
+          </motion.div>
         </div>
       </div>
     </section>

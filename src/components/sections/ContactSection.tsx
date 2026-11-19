@@ -3,7 +3,6 @@ import emailjs from '@emailjs/browser'
 import {motion} from 'framer-motion'
 import {useLanguage} from '../../hooks/LanguageContext'
 import SectionHeading from '../common/SectionHeading'
-import {TextField} from '@mui/material'
 import toast from 'react-hot-toast'
 import {MapPin, Phone, Mail, Send, LoaderCircle} from 'lucide-react'
 import {
@@ -13,6 +12,63 @@ import {
   slideFromRight,
   scaleFade,
 } from '../../animations/variants'
+
+const FIELD_CLASS =
+  'w-full bg-[#000]/40 text-white text-[16px] px-4 py-3 border-0 border-b-2 border-[#262626] outline-none transition-colors hover:border-[#3a3a3a] focus:border-accent placeholder:text-[#666]'
+
+interface FieldProps {
+  id: string
+  name: string
+  label: string
+  value: string
+  onChange: (value: string) => void
+  type?: string
+  autoComplete?: string
+  multiline?: boolean
+}
+
+/** Campo del formulario con etiqueta visible arriba y foco en el color de acento */
+const Field: React.FC<FieldProps> = ({
+  id,
+  name,
+  label,
+  value,
+  onChange,
+  type = 'text',
+  autoComplete,
+  multiline = false,
+}) => (
+  <div className='flex flex-col gap-1.5 w-full'>
+    <label
+      htmlFor={id}
+      className='oswald-regular uppercase text-[12px] tracking-[1.5px] text-[#9a9a9a]'
+    >
+      {label} <span className='text-accent'>*</span>
+    </label>
+    {multiline ? (
+      <textarea
+        id={id}
+        name={name}
+        required
+        rows={5}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={`${FIELD_CLASS} resize-y min-h-32`}
+      />
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        required
+        autoComplete={autoComplete}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={FIELD_CLASS}
+      />
+    )}
+  </div>
+)
 
 const ContactSection: React.FC = () => {
   const {t} = useLanguage()
@@ -101,13 +157,6 @@ const ContactSection: React.FC = () => {
                 variants={slideFromLeft}
                 className='grow-1 text-start lg:max-w-3/8 lg:-mt-4 flex flex-col gap-3'
               >
-                <h3
-                  className='uppercase oswald-regular hidden lg:block'
-                  style={{fontSize: 30}}
-                >
-                  {t('contact.info.title')}
-                </h3>
-                <p className='font-light hidden lg:block'>{t('contact.p1')}</p>
                 <div className='flex flex-col gap-2 lg:gap-4 lg:py-3'>
                   <motion.div
                     variants={scaleFade}
@@ -172,132 +221,34 @@ const ContactSection: React.FC = () => {
                 variants={slideFromRight}
                 className='grow-3 text-start flex flex-col gap-3'
               >
-                <h3
-                  className='uppercase oswald-regular hidden lg:block'
-                  style={{fontSize: 30}}
-                >
-                  {t('contact.message.title')}
-                </h3>
-                <div className='w-full flex flex-col gap-3 pt-3'>
-                  <div className='flex flex-col sm:flex-row gap-3'>
-                    <TextField
-                      id='standard-multiline-static'
-                      label={t('contact.message.name')}
-                      type='text'
+                <div className='w-full flex flex-col gap-4 pt-3'>
+                  <div className='flex flex-col sm:flex-row gap-4'>
+                    <Field
+                      id='contact-name'
                       name='name'
-                      required
-                      rows={1}
-                      variant='filled'
+                      type='text'
+                      autoComplete='name'
+                      label={t('contact.message.name')}
                       value={nameInputValue}
-                      onChange={(e) => setNameInputValue(e.target.value)}
-                      sx={{
-                        width: '100%',
-                        '& .MuiFilledInput-root': {
-                          backgroundColor: '#00000045',
-                          '&:hover': {
-                            backgroundColor: '#00000075',
-                          },
-                          '&.Mui-focused': {
-                            backgroundColor: '#00000075',
-                          },
-                        },
-                        '& .MuiFilledInput-underline:before': {
-                          borderBottomColor: '#222',
-                        },
-                        '& .MuiFilledInput-underline:hover:not(.Mui-disabled):before':
-                          {
-                            borderBottomColor: '#0fa',
-                          },
-                        '& .MuiFilledInput-underline:after': {
-                          borderBottomColor: '#0fa',
-                        },
-                        '& .MuiInputLabel-root': {
-                          color: '#888',
-                          fontFamily: 'Inria Sans',
-                        },
-                        '& .MuiInputLabel-root.Mui-focused': {color: '#0fa'},
-                        '& .MuiInputBase-input': {color: '#fff'},
-                      }}
+                      onChange={setNameInputValue}
                     />
-                    <TextField
-                      id='standard-multiline-static'
-                      label={t('contact.message.email')}
-                      rows={1}
-                      type='email'
+                    <Field
+                      id='contact-email'
                       name='email'
-                      required
-                      variant='filled'
+                      type='email'
+                      autoComplete='email'
+                      label={t('contact.message.email')}
                       value={emailInputValue}
-                      onChange={(e) => setEmailInputValue(e.target.value)}
-                      sx={{
-                        width: '100%',
-                        '& .MuiFilledInput-root': {
-                          backgroundColor: '#00000045',
-                          '&:hover': {
-                            backgroundColor: '#00000075',
-                          },
-                          '&.Mui-focused': {
-                            backgroundColor: '#00000075',
-                          },
-                        },
-                        '& .MuiFilledInput-underline:before': {
-                          borderBottomColor: '#222',
-                        },
-                        '& .MuiFilledInput-underline:hover:not(.Mui-disabled):before':
-                          {
-                            borderBottomColor: '#0fa',
-                          },
-                        '& .MuiFilledInput-underline:after': {
-                          borderBottomColor: '#0fa',
-                        },
-                        '& .MuiInputLabel-root': {
-                          color: '#888',
-                          fontFamily: 'Inria Sans',
-                        },
-                        '& .MuiInputLabel-root.Mui-focused': {color: '#0fa'},
-                        '& .MuiInputBase-input': {color: '#fff'},
-                      }}
+                      onChange={setEmailInputValue}
                     />
                   </div>
-                  <TextField
-                    id='standard-multiline-static'
-                    label={t('contact.message.message')}
-                    multiline
-                    type='text'
+                  <Field
+                    id='contact-message'
                     name='message'
-                    required
-                    rows={5}
-                    variant='filled'
+                    multiline
+                    label={t('contact.message.message')}
                     value={messageInputValue}
-                    onChange={(e) => setMessageInputValue(e.target.value)}
-                    sx={{
-                      width: '100%',
-                      '& .MuiFilledInput-root': {
-                        backgroundColor: '#00000045',
-                        '&:hover': {
-                          backgroundColor: '#00000075',
-                        },
-                        '&.Mui-focused': {
-                          backgroundColor: '#00000075',
-                        },
-                      },
-                      '& .MuiFilledInput-underline:before': {
-                        borderBottomColor: '#222',
-                      },
-                      '& .MuiFilledInput-underline:hover:not(.Mui-disabled):before':
-                        {
-                          borderBottomColor: '#0fa',
-                        },
-                      '& .MuiFilledInput-underline:after': {
-                        borderBottomColor: '#0fa',
-                      },
-                      '& .MuiInputLabel-root': {
-                        color: '#888',
-                        fontFamily: 'Inria Sans',
-                      },
-                      '& .MuiInputLabel-root.Mui-focused': {color: '#0fa'},
-                      '& .MuiInputBase-input': {color: '#fff'},
-                    }}
+                    onChange={setMessageInputValue}
                   />
                 </div>
                 <button

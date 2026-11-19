@@ -23,6 +23,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.about': 'About',
     'nav.projects': 'Projects',
     'nav.contact': 'Contact',
+    'nav.menu': 'Menu',
     'nav.languageChange': 'Mostrar página en Español',
 
     // Home section
@@ -30,6 +31,10 @@ const translations: Record<Language, Record<string, string>> = {
     'home.university': 'University Programmer Analyst',
     'home.university.from': 'from the National University of La Plata',
     'home.university.short': 'National University of La Plata (UNLP)',
+    'home.job': 'Full-stack developer at the',
+    'home.job.place': 'Ministry of Economy of Buenos Aires Province',
+    'home.job.short': 'Full-stack developer · Ministry of Economy (PBA)',
+    'home.university.compact': 'University Programmer Analyst · UNLP',
     'home.university.remaining':
       '2 remaining subjects to complete - 92% completed',
     'home.resume': 'My Resume',
@@ -40,13 +45,15 @@ const translations: Record<Language, Record<string, string>> = {
     // About section
     'about.title': 'About me',
     'about.p1':
-      "Since I was a child, I've been fascinated by technology as a tool for bringing ideas to life. My path led me to graduate as an <b>Electromechanical Technician</b>, but it was in the world of web development where I truly found my calling.",
+      "I'm a full-stack developer from La Plata, Argentina. Since April 2026 I've worked at the <b>Ministry of Economy of Buenos Aires Province</b>, on the team building the province's Public Debt and Credit management system with .NET, React and Oracle.",
     'about.p2':
-      "Over the past few years, I've enjoyed creating functional and engaging solutions, with a particular focus on developing dynamic user interfaces using <b>React</b>. I'm passionate about the logic behind code and the ability to build intuitive user experiences.",
+      'I started out as an <b>Electromechanical Technician</b>, but building software is what stuck. Outside of work, my favorite project is <b>Noche de cine</b>, the app my friends and I use to pick what to watch: it has been in production for over a year, with real-time voting, a WhatsApp bot and more than 20 releases shaped by their feedback.',
     'about.p3':
-      'In my free time, I explore new technologies and apply them to personal projects like <b>Noche de cine</b> an app that reflects my interest in collaboration and practical problem-solving.',
-    'about.p4':
-      'Recently graduated as a <b>University Programmer Analyst</b> from the National University of La Plata (UNLP), I am actively seeking opportunities to grow as a developer, contribute my knowledge and take on new challenges. I am convinced that my constant curiosity and dedication can be a valuable asset to any team.',
+      "I recently graduated as a <b>University Programmer Analyst</b> from UNLP, and I'm open to both new roles and freelance projects.",
+    'about.stack.title': 'Stack',
+    'about.stack.frontend': 'Frontend',
+    'about.stack.backend': 'Backend',
+    'about.stack.data': 'Data & infrastructure',
 
     // Projects section
     'projects.title': 'Projects',
@@ -58,6 +65,8 @@ const translations: Record<Language, Record<string, string>> = {
     'projects.allOfMyProjects': 'More projects',
     'projects.moreCount': 'projects',
     'projects.viewProject': 'View project',
+    'projects.galleryPrev': 'Previous images',
+    'projects.galleryNext': 'Next images',
     'projects.technologies': 'Technologies',
     'projects.links': 'Links',
 
@@ -313,12 +322,12 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.message.success':
       'Mensaje recibido. Muchas gracias por contactarte!',
     'contact.message.error':
-      'Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.',
+      "The message couldn't be sent. Try again in a moment or write to me at llamazares.nico@gmail.com.",
 
     'contact.p1':
-      'I am interested in freelance web development opportunities, either full-time or part-time.',
+      "I'm open to both new roles and freelance projects. Write to me through any of these channels.",
     'contact.p2':
-      'Do you have a proposal or inquiry? Feel free to write me, I will be happy to answer.',
+      'Open to new roles and freelance projects. Write to me however you prefer.',
 
     'footer.my': 'My',
     'footer.portfolio': 'Portfolio',
@@ -332,6 +341,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.about': 'Sobre mí',
     'nav.projects': 'Proyectos',
     'nav.contact': 'Contacto',
+    'nav.menu': 'Menú',
     'nav.languageChange': 'Show page in English',
 
     // Home section
@@ -339,6 +349,10 @@ const translations: Record<Language, Record<string, string>> = {
     'home.university': 'Analista Programador Universitario',
     'home.university.from': 'de la Universidad Nacional de La Plata',
     'home.university.short': 'Universidad Nacional de La Plata (UNLP)',
+    'home.job': 'Desarrollador full-stack en el',
+    'home.job.place': 'Ministerio de Economía de la Provincia de Buenos Aires',
+    'home.job.short': 'Desarrollador full-stack · Ministerio de Economía (PBA)',
+    'home.university.compact': 'Analista Programador Universitario · UNLP',
     'home.university.remaining': '2 materias restantes - 92% completado',
     'home.resume': 'Currículum',
     'home.tagline':
@@ -348,13 +362,15 @@ const translations: Record<Language, Record<string, string>> = {
     // About section
     'about.title': 'Sobre mí',
     'about.p1':
-      'Desde niño, me ha fascinado la tecnología como herramienta para dar vida a ideas. Mi camino me llevó a graduarme como <b>Técnico Electromecánico</b>, pero fue en el mundo del desarrollo web donde realmente encontré mi vocación.',
+      'Soy desarrollador full-stack de La Plata, Argentina. Desde abril de 2026 trabajo en el <b>Ministerio de Economía de la Provincia de Buenos Aires</b>, en el equipo que desarrolla el sistema de gestión de Deuda y Crédito Público de la provincia, con .NET, React y Oracle.',
     'about.p2':
-      'Durante los últimos años, he disfrutado creando soluciones funcionales y atractivas, con un enfoque particular en el desarrollo de interfaces de usuario dinámicas usando <b>React</b>. Me apasiona la lógica detrás del código y la capacidad de construir experiencias de usuario intuitivas.',
+      'Empecé como <b>Técnico Electromecánico</b>, pero lo que me atrapó fue hacer software. Fuera del trabajo, mi proyecto favorito es <b>Noche de cine</b>, la app que usamos con mis amigos para elegir qué película ver: está en producción hace más de un año, tiene votaciones en tiempo real y un bot de WhatsApp, y ya lleva más de 20 versiones hechas a partir de sus comentarios.',
     'about.p3':
-      'En mi tiempo libre, exploro nuevas tecnologías y las aplico a proyectos personales como <b>Noche de cine</b>, una aplicación que refleja mi interés en la colaboración y la resolución práctica de problemas.',
-    'about.p4':
-      'Recientemente recibido como <b>Analista Programador Universitario</b> en la Universidad Nacional de La Plata (UNLP), estoy buscando activamente oportunidades para crecer como desarrollador, aportar mis conocimientos y asumir nuevos desafíos. Estoy convencido de que mi constante curiosidad y dedicación pueden ser un activo valioso para cualquier equipo.',
+      'Hace poco me recibí de <b>Analista Programador Universitario</b> en la UNLP, y estoy abierto tanto a nuevos puestos como a proyectos freelance.',
+    'about.stack.title': 'Stack',
+    'about.stack.frontend': 'Frontend',
+    'about.stack.backend': 'Backend',
+    'about.stack.data': 'Datos e infraestructura',
 
     // Projects section
     'projects.title': 'Proyectos',
@@ -366,6 +382,8 @@ const translations: Record<Language, Record<string, string>> = {
     'projects.allOfMyProjects': 'Más proyectos',
     'projects.moreCount': 'proyectos',
     'projects.viewProject': 'Ver proyecto',
+    'projects.galleryPrev': 'Imágenes anteriores',
+    'projects.galleryNext': 'Imágenes siguientes',
     'projects.technologies': 'Tecnologías',
     'projects.links': 'Enlaces',
 
@@ -621,12 +639,12 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.message.success':
       'Mensaje recibido. Muchas gracias por contactarte!',
     'contact.message.error':
-      'Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo más tarde.',
+      'No se pudo enviar el mensaje. Probá de nuevo en un rato o escribime a llamazares.nico@gmail.com.',
 
     'contact.p1':
-      'Estoy interesado en oportunidades de desarrollo web, tanto freelance como en relación de dependencia.',
+      'Estoy abierto tanto a nuevos puestos como a proyectos freelance. Escribime por cualquiera de estos medios.',
     'contact.p2':
-      '¿Tenés una propuesta o consulta? No dudes en escribirme, estaré encantado de responder.',
+      'Abierto a nuevos puestos y a proyectos freelance. Escribime por donde te quede más cómodo.',
 
     'footer.my': 'Mi',
     'footer.portfolio': 'Portafolio',

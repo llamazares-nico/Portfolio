@@ -34,7 +34,7 @@ function Header(): React.ReactElement {
   }, [])
 
   const handleSmoothScroll = (
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.MouseEvent<HTMLElement>,
     targetId: string
   ) => {
     e.preventDefault()
@@ -81,33 +81,38 @@ function Header(): React.ReactElement {
           className='mx-auto'
         >
           <nav
-            className={`transition-all duration-500 ease-in-out h-22 flex flex-row items-center justify-between overflow-hidden ring-3 ring-[#000]/25 uppercase min-w-[320px] ${
-              isScrolled || width < 1024 ? 'rounded-none' : 'rounded-lg'
-            }`}
+            className={`transition-all duration-500 ease-in-out h-22 flex flex-row items-center justify-between overflow-hidden ring-3 ring-[#000]/25 uppercase min-w-[320px] ${'rounded-none'}`}
           >
             <div className='flex flex-row items-center justify-center overflow-hidden h-22 min-w-[200px] flex-shrink-0'>
-              <div
+              <a
+                href='#home'
+                aria-label='Nicolas Llamazares'
                 onClick={(e) => handleSmoothScroll(e, 'home')}
-                className='cursor-pointer anton-regular p-4 pb-5 w-12 h-full flex flex-row items-center bg-white/85 text-neutral-900 text-xl'
+                className='flex flex-row items-center h-full outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset'
               >
-                ;
-              </div>
-              <div
-                onClick={(e) => handleSmoothScroll(e, 'home')}
-                className='cursor-pointer anton-regular relative h-min -left-[16px] bg-neutral-900 text-white rounded leading-none text-center m-0 p-2 font-bold text-3xl z-5'
-              >
-                NL
-              </div>
-              <div
-                onClick={(e) => handleSmoothScroll(e, 'home')}
-                className='cursor-pointer relative flex border-y border-y-white border-l-[#111] border-l-0 items-center -left-[44px] p-4 ps-9 pe-10 text-start uppercase h-full bg-white text-neutral-900 font-bold leading-4 text-[10px] tracking-[4px]'
-              >
-                Nicolas
-                <br />
-                Llamazares
-              </div>
+                <div
+                  aria-hidden='true'
+                  className='anton-regular p-4 pb-5 w-12 h-full flex flex-row items-center bg-white/85 text-neutral-900 text-xl'
+                >
+                  ;
+                </div>
+                <div
+                  aria-hidden='true'
+                  className='anton-regular relative h-min -left-[16px] bg-neutral-900 text-white rounded leading-none text-center m-0 p-2 font-bold text-3xl z-5'
+                >
+                  NL
+                </div>
+                <div
+                  aria-hidden='true'
+                  className='relative flex border-y border-y-white border-l-[#111] border-l-0 items-center -left-[44px] p-4 ps-9 pe-10 text-start uppercase h-full bg-white text-neutral-900 font-bold leading-4 text-[10px] tracking-[4px]'
+                >
+                  Nicolas
+                  <br />
+                  Llamazares
+                </div>
+              </a>
               {width > 1024 && (
-                <ul className='flex flex-row h-full font-bold text-[14px] relative -left-[15px] flex-shrink-0 overflow-visible'>
+                <ul className='m-0 p-0 list-none flex flex-row h-full font-bold text-[14px] relative -left-[15px] flex-shrink-0 overflow-visible'>
                   <li
                     className={`h-full flex items-center hover:bg-neutral-900 transition-all cursor-pointer ${
                       activeSection === 'about'
@@ -115,14 +120,18 @@ function Header(): React.ReactElement {
                         : ''
                     }`}
                   >
-                    <div
-                      className={`flex items-center px-8 h-full whitespace-nowrap ${
+                    <a
+                      href='#about'
+                      aria-current={
+                        activeSection === 'about' ? 'true' : undefined
+                      }
+                      className={`flex items-center px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
                         activeSection === 'about' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'about')}
                     >
                       {t('nav.about')}
-                    </div>
+                    </a>
                   </li>
                   <li
                     className={`h-full flex items-center hover:bg-neutral-900 transition-all cursor-pointer ${
@@ -131,14 +140,18 @@ function Header(): React.ReactElement {
                         : ''
                     }`}
                   >
-                    <div
-                      className={`flex items-center px-8 h-full whitespace-nowrap ${
+                    <a
+                      href='#projects'
+                      aria-current={
+                        activeSection === 'projects' ? 'true' : undefined
+                      }
+                      className={`flex items-center px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
                         activeSection === 'projects' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'projects')}
                     >
                       {t('nav.projects')}
-                    </div>
+                    </a>
                   </li>
                   <li
                     className={`h-full flex items-center hover:bg-neutral-900 transition-all cursor-pointer ${
@@ -147,14 +160,18 @@ function Header(): React.ReactElement {
                         : ''
                     }`}
                   >
-                    <div
-                      className={`flex items-center px-8 h-full whitespace-nowrap ${
+                    <a
+                      href='#contact'
+                      aria-current={
+                        activeSection === 'contact' ? 'true' : undefined
+                      }
+                      className={`flex items-center px-8 h-full whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset ${
                         activeSection === 'contact' ? 'text-accent' : ''
                       }`}
                       onClick={(e) => handleSmoothScroll(e, 'contact')}
                     >
                       {t('nav.contact')}
-                    </div>
+                    </a>
                   </li>
                 </ul>
               )}
@@ -222,32 +239,43 @@ function Header(): React.ReactElement {
               style={{borderBottom: '1px solid #fff'}}
             >
               <div className='flex flex-row items-center justify-center overflow-visible h-22 min-w-[200px] flex-shrink-0'>
-                <div
-                  onClick={(e) => handleSmoothScroll(e, 'home')}
-                  className='cursor-pointer anton-regular p-4 pb-5 w-12 h-full flex flex-row items-center text-white text-xl'
-                >
-                  ;
-                </div>
                 <div className='absolute w-0 border-l-1 h-full bg-transparent left-12'></div>
-                <div
+                <a
+                  href='#home'
+                  aria-label='Nicolas Llamazares'
                   onClick={(e) => handleSmoothScroll(e, 'home')}
-                  className='cursor-pointer anton-regular relative h-min -left-[16px] bg-[#111] border-1 border-white text-white rounded leading-none text-center m-0 p-2 font-bold text-3xl z-5'
+                  className='flex flex-row items-center h-full outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset'
                 >
-                  NL
-                </div>
-                <div
-                  onClick={(e) => handleSmoothScroll(e, 'home')}
-                  className='cursor-pointer relative flex border-l-[#111] border-l-0 items-center sm:-left-[40px] -left-[35px] p-4 ps-9 pe-7 text-start uppercase h-full text-[#fff] font-bold leading-4 text-[10px] tracking-[4px]'
-                >
-                  Nicolas
-                  <br />
-                  Llamazares
-                </div>
+                  <div
+                    aria-hidden='true'
+                    className='anton-regular p-4 pb-5 w-12 h-full flex flex-row items-center text-white text-xl'
+                  >
+                    ;
+                  </div>
+                  <div
+                    aria-hidden='true'
+                    className='anton-regular relative h-min -left-[16px] bg-[#111] border-1 border-white text-white rounded leading-none text-center m-0 p-2 font-bold text-3xl z-5'
+                  >
+                    NL
+                  </div>
+                  <div
+                    aria-hidden='true'
+                    className='relative flex border-l-[#111] border-l-0 items-center sm:-left-[40px] -left-[35px] p-4 ps-9 pe-7 text-start uppercase h-full text-[#fff] font-bold leading-4 text-[10px] tracking-[4px]'
+                  >
+                    Nicolas
+                    <br />
+                    Llamazares
+                  </div>
+                </a>
               </div>
               <div className='pr-4 overflow-visible'>
                 <button
+                  type='button'
                   onClick={() => setOpen(!open)}
-                  className='w-10 h-10 flex items-center justify-center'
+                  aria-label={t('nav.menu')}
+                  aria-expanded={open}
+                  aria-controls='mobile-menu'
+                  className='w-10 h-10 flex items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-accent'
                 >
                   <motion.svg
                     width='24'
@@ -304,6 +332,7 @@ function Header(): React.ReactElement {
           {open && (
             <motion.div
               key='fullscreen-menu'
+              id='mobile-menu'
               initial={{height: 0}}
               animate={{height: '100%'}}
               exit={{height: 0}}
@@ -313,38 +342,58 @@ function Header(): React.ReactElement {
               <div className='absolute w-0 border-l-1 h-full bg-transparent left-12'></div>
               <div className='w-full h-full text-2xl flex flex-col ps-22 pb-12 pe-12 pt-32 font-bold items-start justify-between uppercase'>
                 <div></div>
-                <div className='flex flex-col gap-8 items-start'>
-                  <div
-                    className='cursor-pointer'
-                    onClick={() => handleScrollToId('home')}
+                <nav
+                  aria-label={t('nav.menu')}
+                  className='flex flex-col gap-8 items-start'
+                >
+                  <a
+                    href='#home'
+                    className='outline-none focus-visible:text-accent hover:text-accent transition-colors'
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleScrollToId('home')
+                    }}
                   >
                     {t('nav.home')}
-                  </div>
-                  <div
-                    className='cursor-pointer'
-                    onClick={() => handleScrollToId('about')}
+                  </a>
+                  <a
+                    href='#about'
+                    className='outline-none focus-visible:text-accent hover:text-accent transition-colors'
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleScrollToId('about')
+                    }}
                   >
                     {t('nav.about')}
-                  </div>
-                  <div
-                    className='cursor-pointer'
-                    onClick={() => handleScrollToId('projects')}
+                  </a>
+                  <a
+                    href='#projects'
+                    className='outline-none focus-visible:text-accent hover:text-accent transition-colors'
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleScrollToId('projects')
+                    }}
                   >
                     {t('nav.projects')}
-                  </div>
-                  <div
-                    className='cursor-pointer'
-                    onClick={() => handleScrollToId('contact')}
+                  </a>
+                  <a
+                    href='#contact'
+                    className='outline-none focus-visible:text-accent hover:text-accent transition-colors'
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleScrollToId('contact')
+                    }}
                   >
                     {t('nav.contact')}
-                  </div>
-                </div>
-                <div
-                  className='cursor-pointer w-full text-end text-[20px] text-[#aaa]'
+                  </a>
+                </nav>
+                <button
+                  type='button'
+                  className='cursor-pointer w-full text-end text-[20px] text-[#aaa] uppercase font-bold outline-none focus-visible:text-accent hover:text-white transition-colors'
                   onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
                 >
-                  {t('nav.languageChange')} &gt;
-                </div>
+                  {t('nav.languageChange')}&nbsp;&gt;
+                </button>
               </div>
             </motion.div>
           )}

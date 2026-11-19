@@ -8,7 +8,7 @@ function Footer(): React.ReactElement {
   const {t} = useLanguage()
 
   const handleSmoothScroll = (
-    e: React.MouseEvent<HTMLDivElement>,
+    e: React.MouseEvent<HTMLElement>,
     targetId: string
   ) => {
     e.preventDefault()
@@ -27,7 +27,7 @@ function Footer(): React.ReactElement {
       initial='hidden'
       whileInView='visible'
       viewport={{once: true, amount: 0.3}}
-      className='w-full -mt-28 pt-1 h-28 bg-[#000]/60 overflow-hidden hidden 2xl:block'
+      className='w-full -mt-28 pt-1 h-28 bg-[#000]/60 overflow-hidden'
       style={{
         clipPath:
           'polygon(0% 0%, 275px 0, 375px 62%, 100% 62%, 100% 100%, 100% 100%, 0% 100%, 0% 100%)',
@@ -57,7 +57,7 @@ function Footer(): React.ReactElement {
             },
           }}
         >
-          <div className='flex flex-row h-16 items-center px-16 pt-11'>
+          <div className='flex flex-row h-16 items-center px-6 md:px-16 pt-11'>
             <div className='anton-regular relative h-min text-neutral-900 bg-white rounded leading-none text-center m-0 p-2 font-bold text-4xl z-5'>
               NL
             </div>
@@ -69,14 +69,15 @@ function Footer(): React.ReactElement {
           </div>
         </motion.div>
         <p
-          className='absolute inset-x-0 bottom-2.5 text-center font-bold text-[#777] text-sm'
+          className='absolute inset-x-0 bottom-2.5 text-center font-bold text-[#777] text-sm hidden md:block'
           style={{fontWeight: 200}}
         >
           {t('footer.message')}
         </p>
-        <div
+        <button
+          type='button'
           onClick={(e) => handleSmoothScroll(e, 'home')}
-          className='cursor-pointer text-[#999] absolute -end-5 flex bottom-0 top-0 text-md leading-none m-0 p-3 pe-7 ps-4.5 pb-3.5 z-5 border-l-4 border-[#070707] items-end hover:bg-[#000]/25 hover:text-white transition duration-300 ease-in-out'
+          className='group cursor-pointer text-[#999] absolute -end-5 flex bottom-0 top-0 text-md leading-none m-0 p-3 pe-7 ps-4.5 pb-3.5 z-5 border-l-4 border-[#070707] items-end hover:bg-[#000]/25 hover:text-white focus-visible:bg-[#000]/25 focus-visible:text-white outline-none transition duration-300 ease-in-out'
           style={{
             transform: 'skew(-15deg)',
           }}
@@ -85,21 +86,13 @@ function Footer(): React.ReactElement {
             className='flex flex-row gap-2'
             style={{transform: 'skew(15deg)'}}
           >
-            <motion.div
-              animate={{
-                y: [1, -1, 1],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            >
-              <ChevronsUp size={19} />
-            </motion.div>
+            <ChevronsUp
+              size={19}
+              className='transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5 motion-reduce:transition-none motion-reduce:transform-none'
+            />
             {t('footer.backToTop')}
           </div>
-        </div>
+        </button>
       </div>
     </motion.div>
   )

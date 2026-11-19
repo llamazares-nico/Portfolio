@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useRef} from 'react'
 import {AnimatePresence, motion} from 'framer-motion'
 import {stagger, fadeInUp} from '../../animations/variants'
 import {useLanguage} from '../../hooks/LanguageContext'
@@ -50,6 +50,13 @@ const ProjectsSection: React.FC = () => {
   const [selectedProjectImage, setSelectedProjectImage] =
     React.useState<GalleryImage | null>(null)
   const isMobile = width <= 768
+  const galleryRef = useRef<HTMLDivElement>(null)
+
+  // Desplaza la tira de miniaturas casi un ancho visible por clic
+  const scrollGallery = (direction: 1 | -1) => {
+    const el = galleryRef.current
+    if (el) el.scrollLeft += direction * el.clientWidth * 0.8
+  }
 
   const projects: Project[] = projectsData.map((p) => ({
     ...p,
@@ -132,7 +139,7 @@ const ProjectsSection: React.FC = () => {
                   className='w-26 h-26 p-3 object-cover border-r-2 border-[#121212] bg-[#000]/35'
                 />
                 <div className='flex flex-col grow'>
-                  <h2 className='text-3xl oswald-regular uppercase'>
+                  <h2 className='text-[38px] leading-tight oswald-regular uppercase'>
                     {selectedProjectData.title}
                   </h2>
                   <div className='flex items-center gap-2'>
@@ -222,81 +229,66 @@ const ProjectsSection: React.FC = () => {
                     {selectedProjectData.gallery &&
                       selectedProjectData.gallery.length > 1 && (
                         <div className='h-[15%] w-full flex flex-row justify-between bg-[#070707]'>
-                          <div
-                            className='h-full bg px-2 cursor-pointer bg-[#050505] hover:bg-[#090909] transition-all flex justify-center items-center'
-                            onClick={() => {
-                              const galleryContainer =
-                                document.querySelector('.gallery-container')
-                              if (galleryContainer) {
-                                galleryContainer.scrollLeft -= 400 // Ajusta este valor según necesites
-                              }
-                            }}
+                          <button
+                            type='button'
+                            aria-label={t('projects.galleryPrev')}
+                            className='h-full px-2 cursor-pointer bg-[#050505] hover:bg-[#090909] focus-visible:bg-[#0d0d0d] focus-visible:text-accent outline-none transition-colors flex justify-center items-center'
+                            onClick={() => scrollGallery(-1)}
                           >
                             <ChevronLeft />
-                          </div>
+                          </button>
                           <div
-                            className='py-6 px-5 overflow-hidden flex flex-row gap-3 h-full items-center justify-start gallery-container bg-[#070707]'
+                            ref={galleryRef}
+                            className='py-6 px-5 overflow-hidden flex flex-row gap-3 h-full items-center justify-start bg-[#070707]'
                             style={{
                               scrollBehavior: 'smooth',
-                              scrollSnapAlign: 'start',
                               scrollSnapType: 'x mandatory',
-                              scrollSnapStop: 'always',
                             }}
                           >
-                            {selectedProjectData.gallery &&
-                              selectedProjectData.gallery.map((x, index) =>
-                                x.src.endsWith('.mp4') ? (
-                                  <div
-                                    onClick={() => setSelectedProjectImage(x)}
-                                    key={index}
-                                    className={`w-22 h-14 cursor-pointer border-1 relative ${
-                                      selectedProjectImage &&
-                                      selectedProjectImage.src === x.src
-                                        ? 'border-accent opacity-100'
-                                        : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
-                                    } transition-all`}
-                                  >
-                                    {/* Imagen de previsualización para videos */}
-                                    <img
-                                      src={x.thumbnailSrc || ''}
-                                      alt={x.alt}
-                                      className='w-full h-full object-cover'
-                                    />
-                                    {/* Indicador de video */}
-                                    <div className='absolute inset-0 flex items-center justify-center'>
-                                      <div className='w-5 h-5 bg-black/50 rounded-full flex items-center justify-center'>
-                                        <div className='w-0 h-0 border-t-[4px] border-t-transparent border-l-[6px] border-l-white border-b-[4px] border-b-transparent ml-0.5'></div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                ) : (
+                            {selectedProjectData.gallery.map((x, index) => {
+                              const active = selectedProjectImage?.src === x.src
+                              return (
+                                <button
+                                  type='button'
+                                  key={index}
+                                  onClick={() => setSelectedProjectImage(x)}
+                                  aria-label={x.alt}
+                                  aria-pressed={active}
+                                  className={`relative shrink-0 w-22 h-14 cursor-pointer border-1 outline-none focus-visible:opacity-100 focus-visible:border-white transition-all [scroll-snap-align:start] ${
+                                    active
+                                      ? 'border-accent opacity-100'
+                                      : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
+                                  }`}
+                                >
                                   <img
-                                    onClick={() => setSelectedProjectImage(x)}
-                                    key={index}
-                                    src={x.src}
-                                    alt={x.alt}
-                                    className={`w-22 h-14 cursor-pointer border-1 ${
-                                      selectedProjectImage &&
-                                      selectedProjectImage.src === x.src
-                                        ? 'border-accent opacity-100'
-                                        : 'border-[#252525] hover:border-[#aaa] opacity-40 hover:opacity-75'
-                                    } transition-all object-cover`}
+                                    src={
+                                      x.src.endsWith('.mp4')
+                                        ? x.thumbnailSrc || ''
+                                        : x.src
+                                    }
+                                    alt=''
+                                    className='w-full h-full object-cover'
                                   />
-                                )
-                              )}
+                                  {x.src.endsWith('.mp4') && (
+                                    /* Indicador de video */
+                                    <span className='absolute inset-0 flex items-center justify-center'>
+                                      <span className='w-5 h-5 bg-black/50 rounded-full flex items-center justify-center'>
+                                        <span className='w-0 h-0 border-t-[4px] border-t-transparent border-l-[6px] border-l-white border-b-[4px] border-b-transparent ml-0.5' />
+                                      </span>
+                                    </span>
+                                  )}
+                                </button>
+                              )
+                            })}
                           </div>
-                          <div
-                            className='h-full bg px-2 cursor-pointer bg-[#050505] hover:bg-[#090909] transition-all flex justify-center items-center'
-                            onClick={() => {
-                              const galleryContainer =
-                                document.querySelector('.gallery-container')
-                              if (galleryContainer) {
-                                galleryContainer.scrollLeft += 400 // Ajusta este valor según necesites
-                              }
-                            }}
+                          <button
+                            type='button'
+                            aria-label={t('projects.galleryNext')}
+                            className='h-full px-2 cursor-pointer bg-[#050505] hover:bg-[#090909] focus-visible:bg-[#0d0d0d] focus-visible:text-accent outline-none transition-colors flex justify-center items-center'
+                            onClick={() => scrollGallery(1)}
                           >
                             <ChevronRight />
-                          </div>
+                          </button>
                         </div>
                       )}
                   </div>
@@ -443,6 +435,12 @@ const ProjectsSection: React.FC = () => {
       description={project.description}
       links={project.links}
       imgStyle={project.imgStyle}
+      // La tarjeta destacada es la más alta: aprovecha el espacio con su stack
+      highlights={
+        project.id === featured[0]?.id
+          ? project.technologies?.slice(0, 7)
+          : undefined
+      }
     />
   )
 
@@ -459,7 +457,7 @@ const ProjectsSection: React.FC = () => {
       <div className='flex flex-row items-baseline justify-between gap-4 mb-5'>
         <h2
           id='more-projects-title'
-          className='oswald-regular uppercase text-[28px] leading-none'
+          className='oswald-regular uppercase text-[36px] leading-none'
         >
           {t('projects.allOfMyProjects')}
         </h2>
